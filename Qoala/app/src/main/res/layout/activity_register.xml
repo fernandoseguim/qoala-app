@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="solutions.plural.qoala.RegisterActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:text="@string/txt_toregister"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editNomeRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:ems="10"
+        android:hint="@string/hint_name"
+        android:inputType="textPersonName"
+        android:theme="@style/AppTheme.EditText" />
+
+    <EditText
+        android:id="@+id/edtemailRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editNomeRegister"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/imageView5"
+        android:layout_toRightOf="@+id/imageView5"
+        android:ems="10"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        android:theme="@style/AppTheme.EditText" />
+
+    <EditText
+        android:id="@+id/edtPasswordRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtemailRegister"
+        android:layout_alignStart="@+id/edtemailRegister"
+        android:layout_below="@+id/edtemailRegister"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:theme="@style/AppTheme.EditText" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/editNomeRegister"
+        android:layout_toLeftOf="@+id/editNomeRegister"
+        android:layout_toStartOf="@+id/editNomeRegister"
+        android:labelFor="@id/edtEmail"
+        android:src="@drawable/icon_user" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/edtemailRegister"
+        android:layout_toLeftOf="@+id/edtemailRegister"
+        android:layout_toStartOf="@+id/edtemailRegister"
+        android:labelFor="@id/edtPassword"
+        android:src="@drawable/icon_pass" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/edtPasswordRegister"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:background="@color/colorAccent"
+        android:backgroundTintMode="multiply"
+        android:onClick="registerClick"
+        android:text="@string/action_registergo"
+        android:textColor="@color/colorBackground" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_darkbg" />
+</RelativeLayout>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorBackground">#223641</color>
+    <color name="colorBackground">#263238</color>
 
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#18ffff</color>
 
     <color name="holo_primary">#263238</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
