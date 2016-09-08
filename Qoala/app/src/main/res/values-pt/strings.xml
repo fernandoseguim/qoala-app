@@ -8,6 +8,9 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (Opcional)</string>
 
+    <string name="info_login_success">Login com sucesso!</string>
+    <string name="info_register_success">Registrado com sucesso!</string>
+
     <string name="action_settings">Configurações</string>
     <string name="action_login">Entre</string>
     <string name="action_register">Eu não tenho ainda, registrar</string>
@@ -17,11 +20,16 @@
     <string name="error_invalid_password">Esta senha é muito curta</string>
     <string name="error_incorrect_password">Senha incorreta</string>
     <string name="error_field_required">Este campo é obrigatório</string>
+    <string name="error_register_failure">Falhou ao registrar, Verifique sua conexão com a internet e tente novamente.</string>
 
     <string name="hint_name">Nome do usuário</string>
     <string name="hint_email">E-mail do usuário</string>
     <string name="hint_password">Senha</string>
 
     <string name="txt_toregister">Para registrar-se, você só precisa\n digitar seu nome, e-mail e senha \nnos campos abaixo e registrar</string>
+
+    <string name="progress_title">Processando...</string>
+    <string name="progress_waiting">Processando sua requisição...</string>
+    <string name="progress_registering">Registrando usuário</string>
 
 </resources>

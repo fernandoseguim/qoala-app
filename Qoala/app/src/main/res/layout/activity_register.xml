@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editNomeRegister"
+        android:id="@+id/edtUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
@@ -32,10 +32,10 @@
         android:theme="@style/AppTheme.EditText" />
 
     <EditText
-        android:id="@+id/edtemailRegister"
+        android:id="@+id/edtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editNomeRegister"
+        android:layout_below="@+id/edtUserName"
         android:layout_marginTop="30dp"
         android:layout_toEndOf="@+id/imageView5"
         android:layout_toRightOf="@+id/imageView5"
@@ -45,12 +45,12 @@
         android:theme="@style/AppTheme.EditText" />
 
     <EditText
-        android:id="@+id/edtPasswordRegister"
+        android:id="@+id/edtPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edtemailRegister"
-        android:layout_alignStart="@+id/edtemailRegister"
-        android:layout_below="@+id/edtemailRegister"
+        android:layout_alignLeft="@+id/edtEmail"
+        android:layout_alignStart="@+id/edtEmail"
+        android:layout_below="@+id/edtEmail"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="@string/hint_password"
@@ -61,9 +61,9 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/editNomeRegister"
-        android:layout_toLeftOf="@+id/editNomeRegister"
-        android:layout_toStartOf="@+id/editNomeRegister"
+        android:layout_alignTop="@+id/edtUserName"
+        android:layout_toLeftOf="@+id/edtUserName"
+        android:layout_toStartOf="@+id/edtUserName"
         android:labelFor="@id/edtEmail"
         android:src="@drawable/icon_user" />
 
@@ -71,9 +71,9 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/edtemailRegister"
-        android:layout_toLeftOf="@+id/edtemailRegister"
-        android:layout_toStartOf="@+id/edtemailRegister"
+        android:layout_alignTop="@+id/edtEmail"
+        android:layout_toLeftOf="@+id/edtEmail"
+        android:layout_toStartOf="@+id/edtEmail"
         android:labelFor="@id/edtPassword"
         android:src="@drawable/icon_pass" />
 
@@ -81,7 +81,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/edtPasswordRegister"
+        android:layout_below="@+id/edtPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:background="@color/colorAccent"
@@ -99,4 +99,17 @@
         android:layout_marginBottom="60dp"
         android:scaleType="fitCenter"
         android:src="@drawable/logo_darkbg" />
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:src="@drawable/logoplural"
+        android:id="@+id/imageView8"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:scaleType="centerCrop"
+        android:tint="@android:color/white"
+        android:tintMode="add" />
+
 </RelativeLayout>

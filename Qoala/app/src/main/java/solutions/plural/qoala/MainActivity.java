@@ -10,7 +10,6 @@ import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private VideoView mVideoView = null;
     private EditText edtEmail = null;
     private EditText edtPassword = null;
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public void registerClick(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("email", edtEmail.getText());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivityForResult(intent, RC_Register);
     }
 
