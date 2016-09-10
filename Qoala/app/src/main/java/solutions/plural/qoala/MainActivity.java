@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void login() {
         Intent intent = new Intent(this, RegisterActivity.class);
-        intent.putExtra("email", edtEmail.getText());
-        intent.putExtra("pwd", edtPassword.getText());
+        intent.putExtra("email", edtEmail.getText().toString());
+        intent.putExtra("pwd", edtPassword.getText().toString());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivityForResult(intent, RC_Register);
         Toast.makeText(MainActivity.this, edtEmail.getText() + "-" + edtPassword.getText(), Toast.LENGTH_SHORT).show();

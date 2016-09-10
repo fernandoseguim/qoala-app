@@ -48,10 +48,9 @@ public class JSONAPI {
             URL url = new URL(specURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             try {
-                connection.setUseCaches(false);
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Context-Type", "application/json");
-                connection.setRequestProperty("Accept", "application/json");
+                connection.addRequestProperty("Accept", "application/json");
                 //connection.setRequestProperty("accept-encoding", "gzip, deflate, sdch")
 
 //            JSONStringer json = new JSONStringer();
@@ -62,7 +61,18 @@ public class JSONAPI {
 //            json.endObject();
 
                 writeInputStream(connection, jsonStringer);
-                return readInputStream(connection);
+
+                JSONObject ret;
+                try {
+                    ret = readInputStream(connection);
+                } catch(Exception ex) {
+                    ret = new JSONObject();
+                }
+
+                ret.accumulate("responseCode", connection.getResponseCode()).accumulate("responseMessage", connection.getResponseMessage());
+
+                return ret;
+
             } finally {
                 connection.disconnect();
             }
@@ -91,8 +101,7 @@ public class JSONAPI {
     public static void writeInputStream(HttpURLConnection connection, JSONStringer jsonStringer)
             throws JSONException, IOException {
 
-        OutputStreamWriter stream = new OutputStreamWriter(
-                connection.getOutputStream());
+        OutputStreamWriter stream = new OutputStreamWriter(connection.getOutputStream());
 //                GZIPOutputStream stream = new GZIPOutputStream(connection.getOutputStream());
 
         try {
