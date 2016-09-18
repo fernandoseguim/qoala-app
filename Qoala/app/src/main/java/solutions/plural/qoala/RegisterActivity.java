@@ -1,6 +1,7 @@
 package solutions.plural.qoala;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -13,12 +14,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import java.net.HttpURLConnection;
-
 import solutions.plural.qoala.utils.JSONAPI;
+import solutions.plural.qoala.utils.Util;
 
 public class RegisterActivity extends Activity {
 
+    public Context getContext() {
+        return RegisterActivity.this;
+    }
 
     private EditText edtEmail = null;
     private EditText edtPassword = null;
@@ -33,10 +36,10 @@ public class RegisterActivity extends Activity {
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         edtUsername = (EditText) findViewById(R.id.edtUserName);
 
-        String email = null;
-        String pwd = null;
 
         Bundle bundle = getIntent().getExtras();
+        String email = null;
+        String pwd = null;
 
         if (bundle != null) {
             bundle.getString("email");
@@ -46,16 +49,11 @@ public class RegisterActivity extends Activity {
             }
             if (bundle.containsKey("pwd")) {
                 pwd = bundle.getString("pwd");
-                new RequestLoginTask().execute(pwd, email);
             }
         }
-
         edtEmail.setText(email);
         edtPassword.setText(pwd);
-    }
 
-    private boolean isValidEmail(CharSequence email) {
-        return email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public void registerClick(View v) {
@@ -66,7 +64,7 @@ public class RegisterActivity extends Activity {
                 edtUsername.requestFocus();
             return;
         }
-        if (!isValidEmail(edtEmail.getText().toString())) {
+        if (!Util.isValidEmail(edtEmail.getText().toString())) {
             Toast.makeText(getContext(), R.string.error_invalid_email, Toast.LENGTH_LONG).show();
             if (edtEmail.isFocusable())
                 edtEmail.requestFocus();
@@ -79,12 +77,10 @@ public class RegisterActivity extends Activity {
             return;
         }
 
-        RegisterTask task = new RegisterTask();
-        task.execute(edtUsername.getText().toString(), edtEmail.getText().toString(), edtPassword.getText().toString());
-    }
-
-    public Context getContext() {
-        return RegisterActivity.this;
+        new RegisterTask().execute(
+                edtUsername.getText().toString(),
+                edtEmail.getText().toString(),
+                edtPassword.getText().toString());
     }
 
     /**
@@ -102,16 +98,14 @@ public class RegisterActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... params) {
             try {
-                // TODO: 05/09/2016 Acessar serviço de registro
-
                 JSONStringer json = new JSONStringer();
                 json.object();
-                json.key("username").value(params[0]);
+                json.key("name").value(params[0]);
                 json.key("email").value(params[1]);
-                json.key("pwd").value(params[2]);
+                json.key("password").value(params[2]);
                 json.endObject();
 
-                return JSONAPI.PostJSON("https://echo.getpostman.com/post", json);
+                return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/register", json);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -123,78 +117,41 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(JSONObject retorno) {
             super.onPostExecute(retorno);
             progressDialog.dismiss();
-            // TODO: 05/09/2016 De acordo com o retorno, armazenar o tokienID ou retornar a mensagem apropriada.
             if (retorno == null) {
-                Toast.makeText(getContext(), R.string.error_register_failure, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_connection_failure, Toast.LENGTH_LONG).show();
             } else {
                 try {
-                    if (retorno.getJSONObject("form") != null) {
-                        String nome = retorno.getJSONObject("form").getJSONObject("").getString("username");
-                        if (nome.equalsIgnoreCase("Gabriel")) {
-                            Toast.makeText(getContext(), R.string.info_register_success, Toast.LENGTH_LONG).show();
+                    if (retorno.has(JSONAPI.json_respondeCode)) {
+                        StringBuilder mensagem = new StringBuilder();
+                        int code = retorno.getInt(JSONAPI.json_respondeCode);
+
+
+                        switch (code) {
+                            case 400://Bad Request
+                                if (retorno.has(JSONAPI.json_Message))
+                                    mensagem.append(retorno.getString(JSONAPI.json_Message));
+                                new AlertDialog.Builder(getContext())
+                                        .setTitle(R.string.title_activity_register)
+                                        .setPositiveButton(android.R.string.ok, null)
+                                        .setMessage(mensagem)
+                                        .create()
+                                        .show();
+                                break;
+
+                            case 200:
+                                //todo: receber ok do login e registrar token
+                                if (retorno.has(JSONAPI.json_token)) {
+                                    String token = retorno.getString(JSONAPI.json_token);
+                                    SessionResources.getInstance(true).setToken(token);
+                                }
+                                break;
                         }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            finishActivity(101);
         }
     }
 
-
-    /**
-     * Task para requisitar login
-     */
-    private class RequestLoginTask extends AsyncTask<String, Integer, JSONObject> {
-
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.progress_title), getString(R.string.progress_registering));
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... params) {
-            try {
-                // TODO: 05/09/2016 Acessar serviço
-                JSONStringer json = new JSONStringer();
-                json.object();
-                json.key("PASSWORD").value(params[0]);
-                json.key("EMAIL").value(params[1]);
-                json.endObject();
-
-                return JSONAPI.PostJSON("http://ws.qoala.com.br/Accounts/Login", json);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject retorno) {
-            super.onPostExecute(retorno);
-            progressDialog.dismiss();
-
-            if (retorno == null) {
-                Toast.makeText(getContext(), R.string.error_register_failure, Toast.LENGTH_LONG).show();
-                finishAndRemoveTask();
-            } else {
-                try {
-                    if (retorno.has("responseCode")) {
-                        if (retorno.getInt("responseCode") == HttpURLConnection.HTTP_OK) {
-
-                            Toast.makeText(getContext(), R.string.info_register_success, Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            finishActivity(101);
-        }
-    }
 }

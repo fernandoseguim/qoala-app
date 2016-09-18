@@ -12,7 +12,7 @@
     <string name="info_register_success">Registrado com sucesso!</string>
 
     <string name="action_settings">Configurações</string>
-    <string name="action_login">Entre</string>
+    <string name="action_login">Entrar</string>
     <string name="action_register">Eu não tenho ainda, registrar</string>
     <string name="action_registergo">Registrar e Entrar</string>
 
@@ -20,7 +20,7 @@
     <string name="error_invalid_password">Esta senha é muito curta</string>
     <string name="error_incorrect_password">Senha incorreta</string>
     <string name="error_field_required">Este campo é obrigatório</string>
-    <string name="error_register_failure">Falhou ao registrar, Verifique sua conexão com a internet e tente novamente.</string>
+    <string name="error_connection_failure">Falhou ao registrar, Verifique sua conexão com a internet e tente novamente.</string>
 
     <string name="hint_name">Nome do usuário</string>
     <string name="hint_email">E-mail do usuário</string>

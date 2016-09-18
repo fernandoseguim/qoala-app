@@ -25,6 +25,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="solutions.plural.qoala.MainActivity" />
         </activity>
+
+        <service
+            android:name=".LoginService"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>

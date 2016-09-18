@@ -13,13 +13,18 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import solutions.plural.qoala.SessionResources;
+
 /**
  * Created by gabriel on 07/09/2016.
  * require <code> <uses-permission android:name=”android.permission.INTERNET” /> </code> in manifest
  */
 public class JSONAPI {
     private static final String TAG = "JSONAPI";
-
+    public static final String json_respondeCode = "_responseCode";
+    public static final String json_responseMessage = "_responseMessage";
+    public static final String json_Message = "Message";
+    public static final String json_token = "Token";
 
     public static JSONObject GetJSON(String specURL) {
         JSONObject resultado = null;
@@ -50,26 +55,22 @@ public class JSONAPI {
             try {
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Context-Type", "application/json");
-                connection.addRequestProperty("Accept", "application/json");
+                //connection.addRequestProperty("Accept", "application/json");
                 //connection.setRequestProperty("accept-encoding", "gzip, deflate, sdch")
 
-//            JSONStringer json = new JSONStringer();
-//            json.object();
-//            json.key("descricao").value(strings[0]);
-//            json.key("quantidade").value(strings[1]);
-//            json.key("preco").value(strings[2]);
-//            json.endObject();
+                // add Auth Token
+                SessionResources sr=SessionResources.getInstance();
+                if(sr.isLoggedIn())
+                    connection.addRequestProperty("Authorization", "Token "+sr.getToken());
 
                 writeInputStream(connection, jsonStringer);
 
                 JSONObject ret;
                 try {
                     ret = readInputStream(connection);
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     ret = new JSONObject();
                 }
-
-                ret.accumulate("responseCode", connection.getResponseCode()).accumulate("responseMessage", connection.getResponseMessage());
 
                 return ret;
 
@@ -85,17 +86,24 @@ public class JSONAPI {
     public static JSONObject readInputStream(HttpURLConnection connection)
             throws JSONException, IOException {
 
-        BufferedReader stream = new BufferedReader(
-                new InputStreamReader(connection.getInputStream()));
-
         String linha = "";
         StringBuilder builder = new StringBuilder();
-
+        BufferedReader stream;
+        try {
+            stream = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+        } catch (Exception ex) {
+            stream = new BufferedReader(
+                    new InputStreamReader(connection.getErrorStream()));
+        }
         while ((linha = stream.readLine()) != null) {
             builder.append(linha);
         }
+        JSONObject ret = new JSONObject(builder.toString())
+                .accumulate(json_respondeCode, connection.getResponseCode())
+                .accumulate(json_responseMessage, connection.getResponseMessage());
 
-        return new JSONObject(builder.toString());
+        return ret;
     }
 
     public static void writeInputStream(HttpURLConnection connection, JSONStringer jsonStringer)

@@ -14,13 +14,13 @@
     <string name="action_settings">Settings</string>
     <string name="action_login">Sign in</string>
     <string name="action_register">I do not have yet, register</string>
-    <string name="action_registergo">Register and Go</string>
+    <string name="action_registergo">Register and Login</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="error_register_failure">Register failure, check your internet connection and try again.</string>
+    <string name="error_connection_failure">Register failure, check your internet connection and try again.</string>
 
     <string name="hint_name">User Name</string>
     <string name="hint_email">User e-mail</string>
