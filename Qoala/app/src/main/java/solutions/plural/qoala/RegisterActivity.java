@@ -2,7 +2,6 @@ package solutions.plural.qoala;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.IntentService;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.utils.JSONAPI;
+import solutions.plural.qoala.utils.JSONAPI2;
 import solutions.plural.qoala.utils.Util;
 
 public class RegisterActivity extends Activity {
@@ -107,7 +105,7 @@ public class RegisterActivity extends Activity {
                 json.key("password").value(params[2]);
                 json.endObject();
 
-                return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/register", json);
+                return JSONAPI2.PostJSON("http://ws.qoala.com.br/accounts/register", json);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -124,15 +122,15 @@ public class RegisterActivity extends Activity {
 
             } else {
                 try {
-                    if (retorno.has(JSONAPI.json_respondeCode)) {
+                    if (retorno.has(JSONAPI2.json_respondeCode)) {
                         StringBuilder mensagem = new StringBuilder();
-                        int code = retorno.getInt(JSONAPI.json_respondeCode);
+                        int code = retorno.getInt(JSONAPI2.json_respondeCode);
 
 
                         switch (code) {
                             case 400://Bad Request
-                                if (retorno.has(JSONAPI.json_Message))
-                                    mensagem.append(retorno.getString(JSONAPI.json_Message));
+                                if (retorno.has(JSONAPI2.json_Message))
+                                    mensagem.append(retorno.getString(JSONAPI2.json_Message));
                                 new AlertDialog.Builder(getContext())
                                         .setTitle(R.string.title_activity_register)
                                         .setPositiveButton(android.R.string.ok, null)
@@ -143,11 +141,11 @@ public class RegisterActivity extends Activity {
 
                             case 201:
                                 //todo: receber ok do login e registrar token
-                                if (retorno.has(JSONAPI.json_token)) {
-                                    String token = retorno.getString(JSONAPI.json_token);
+                                if (retorno.has(JSONAPI2.json_token)) {
+                                    String token = retorno.getString(JSONAPI2.json_token);
                                     //SessionResources.getInstance(true).setToken(token);
                                     Intent i = getIntent();
-                                    i.putExtra(JSONAPI.json_token, token);
+                                    i.putExtra(JSONAPI2.json_token, token);
                                     setResult(RESULT_OK, i);
                                     finishActivity(101);
                                 }
