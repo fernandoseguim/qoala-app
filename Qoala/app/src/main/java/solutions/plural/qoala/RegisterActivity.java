@@ -2,8 +2,10 @@ package solutions.plural.qoala;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.IntentService;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -107,7 +109,7 @@ public class RegisterActivity extends Activity {
 
                 return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/register", json);
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -117,8 +119,9 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(JSONObject retorno) {
             super.onPostExecute(retorno);
             progressDialog.dismiss();
-            if (retorno == null) {
+            if (retorno == null || retorno.has("Error")) {
                 Toast.makeText(getContext(), R.string.error_connection_failure, Toast.LENGTH_LONG).show();
+
             } else {
                 try {
                     if (retorno.has(JSONAPI.json_respondeCode)) {
@@ -138,11 +141,15 @@ public class RegisterActivity extends Activity {
                                         .show();
                                 break;
 
-                            case 200:
+                            case 201:
                                 //todo: receber ok do login e registrar token
                                 if (retorno.has(JSONAPI.json_token)) {
                                     String token = retorno.getString(JSONAPI.json_token);
-                                    SessionResources.getInstance(true).setToken(token);
+                                    //SessionResources.getInstance(true).setToken(token);
+                                    Intent i = getIntent();
+                                    i.putExtra(JSONAPI.json_token, token);
+                                    setResult(RESULT_OK, i);
+                                    finishActivity(101);
                                 }
                                 break;
                         }

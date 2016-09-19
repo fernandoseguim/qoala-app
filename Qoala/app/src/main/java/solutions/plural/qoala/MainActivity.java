@@ -64,9 +64,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registerClick(View v) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        intent.putExtra("email", edtEmail.getText());
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startRegisterActivity();
+    }
+
+
+    private void startDeviceListActivity() {
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
+        intent.putExtra("email", edtEmail.getText().toString());
+        intent.putExtra("pwd", edtPassword.getText().toString());
+        startActivity(intent);
+    }
+
+    private void startRegisterActivity() {
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
+        intent.putExtra("email", edtEmail.getText().toString());
+        intent.putExtra("pwd", edtPassword.getText().toString());
         startActivityForResult(intent, RC_Register);
     }
 
@@ -74,14 +86,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == RC_Register) {
-            if (resultCode == 1) {
+            if (resultCode == RESULT_OK) {
                 Bundle b = data.getExtras();
-                if (b.containsKey("email"))
-                    edtEmail.setText(b.getString("email"));
-                if (b.containsKey("pwd"))
-                    edtEmail.setText(b.getString("pwd"));
-                if (edtEmail.getText().length() > 0 && edtPassword.getText().length() > 0) {
-                    login();
+                if (b.containsKey(JSONAPI.json_token)) {
+                    String token = b.getString(JSONAPI.json_token);
+                    SessionResources.getInstance().setToken(token);
+                    startDeviceListActivity();
                 }
             }
         }
@@ -96,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.progress_title), getContext().getString(R.string.progress_registering));
+            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.progress_title), getContext().getString(R.string.progress_waiting));
         }
 
         @Override
@@ -120,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject retorno) {
             progressDialog.dismiss();
 
-            if (retorno == null) {
+            if (retorno == null || retorno.has("Error")) {
                 Toast.makeText(getContext(), R.string.error_connection_failure, Toast.LENGTH_LONG).show();
             } else {
                 try {
@@ -137,10 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                         .setNegativeButton(R.string.action_registergo, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Intent intent = new Intent(getContext(), RegisterActivity.class);
-                                                intent.putExtra("email", edtEmail.getText().toString());
-                                                intent.putExtra("pwd", edtPassword.getText().toString());
-                                                startActivityForResult(intent, RC_Register);
+                                                startRegisterActivity();
                                             }
                                         })
                                         .setPositiveButton(android.R.string.ok, null)
@@ -149,11 +156,12 @@ public class MainActivity extends AppCompatActivity {
                                         .show();
                                 break;
 
-                            case 200:
+                            case 201://Created
                                 //todo: receber ok do login e registrar token
                                 if (retorno.has(JSONAPI.json_token)) {
                                     String token = retorno.getString(JSONAPI.json_token);
                                     SessionResources.getInstance(true).setToken(token);
+                                    startDeviceListActivity();
                                 }
                                 break;
                         }
@@ -164,4 +172,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

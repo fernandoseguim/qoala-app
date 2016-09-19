@@ -26,8 +26,7 @@ public class JSONAPI {
     public static final String json_Message = "Message";
     public static final String json_token = "Token";
 
-    public static JSONObject GetJSON(String specURL) {
-        JSONObject resultado = null;
+    public static JSONObject GetJSON(String specURL, JSONStringer jsonStringer) {
         try {
             URL url = new URL(specURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -36,6 +35,14 @@ public class JSONAPI {
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/json");
 
+                // add Auth Token
+                SessionResources sr = SessionResources.getInstance();
+                if (sr.isLoggedIn())
+                    connection.addRequestProperty("Authorization", "Token " + sr.getToken());
+
+                if (jsonStringer != null)
+                    writeInputStream(connection, jsonStringer);
+
                 return readInputStream(connection);
             } finally {
                 connection.disconnect();
@@ -43,8 +50,14 @@ public class JSONAPI {
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "GetJSON: " + e.getMessage(), e);
+            JSONObject ret = new JSONObject();
+            try {
+                ret.accumulate("Error", e.getMessage());
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return ret;
         }
-        return null;
     }
 
     public static JSONObject PostJSON(String specURL, JSONStringer jsonStringer) {
@@ -54,16 +67,16 @@ public class JSONAPI {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             try {
                 connection.setRequestMethod("POST");
-                connection.setRequestProperty("Context-Type", "application/json");
                 //connection.addRequestProperty("Accept", "application/json");
                 //connection.setRequestProperty("accept-encoding", "gzip, deflate, sdch")
 
                 // add Auth Token
-                SessionResources sr=SessionResources.getInstance();
-                if(sr.isLoggedIn())
-                    connection.addRequestProperty("Authorization", "Token "+sr.getToken());
+                SessionResources sr = SessionResources.getInstance();
+                if (sr.isLoggedIn())
+                    connection.addRequestProperty("Authorization", "Token " + sr.getToken());
 
-                writeInputStream(connection, jsonStringer);
+                if (jsonStringer != null)
+                    writeInputStream(connection, jsonStringer);
 
                 JSONObject ret;
                 try {
@@ -79,8 +92,15 @@ public class JSONAPI {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "PostJSON: " + e.getMessage(), e);
+            JSONObject ret = new JSONObject();
+            try {
+                ret.accumulate("Error", e.getMessage());
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return ret;
         }
-        return null;
     }
 
     public static JSONObject readInputStream(HttpURLConnection connection)
@@ -109,6 +129,7 @@ public class JSONAPI {
     public static void writeInputStream(HttpURLConnection connection, JSONStringer jsonStringer)
             throws JSONException, IOException {
 
+        connection.setRequestProperty("Content-Type", "application/json");
         OutputStreamWriter stream = new OutputStreamWriter(connection.getOutputStream());
 //                GZIPOutputStream stream = new GZIPOutputStream(connection.getOutputStream());
 

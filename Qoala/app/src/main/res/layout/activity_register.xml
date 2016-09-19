@@ -64,7 +64,7 @@
         android:layout_alignTop="@+id/edtUserName"
         android:layout_toLeftOf="@+id/edtUserName"
         android:layout_toStartOf="@+id/edtUserName"
-        android:labelFor="@id/edtEmail"
+        android:labelFor="@id/edtUserName"
         android:src="@drawable/icon_user" />
 
     <ImageView
@@ -74,6 +74,16 @@
         android:layout_alignTop="@+id/edtEmail"
         android:layout_toLeftOf="@+id/edtEmail"
         android:layout_toStartOf="@+id/edtEmail"
+        android:labelFor="@id/edtEmail"
+        android:src="@drawable/icon_email" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/edtPassword"
+        android:layout_toLeftOf="@+id/edtPassword"
+        android:layout_toStartOf="@+id/edtPassword"
         android:labelFor="@id/edtPassword"
         android:src="@drawable/icon_pass" />
 

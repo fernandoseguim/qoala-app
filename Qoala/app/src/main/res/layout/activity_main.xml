@@ -102,10 +102,11 @@
         android:id="@+id/btnRegister"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/btnLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="0dp"
         android:onClick="registerClick"
         android:text="@string/action_register" />
 
