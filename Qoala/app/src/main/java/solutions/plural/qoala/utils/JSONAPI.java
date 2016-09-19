@@ -19,8 +19,8 @@ import solutions.plural.qoala.SessionResources;
  * Created by gabriel on 07/09/2016.
  * require <code> <uses-permission android:name=”android.permission.INTERNET” /> </code> in manifest
  */
-public class JSONAPI2 {
-    private static final String TAG = "JSONAPI2";
+public class JSONAPI {
+    private static final String TAG = "JSONAPI";
     public static final String json_respondeCode = "_responseCode";
     public static final String json_responseMessage = "_responseMessage";
     public static final String json_Message = "Message";
