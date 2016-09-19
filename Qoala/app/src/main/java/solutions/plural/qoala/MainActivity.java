@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.utils.JSONAPI2;
+import solutions.plural.qoala.utils.JSONAPI;
 import solutions.plural.qoala.utils.Util;
 
 public class MainActivity extends AppCompatActivity {
@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_Register) {
             if (resultCode == RESULT_OK) {
                 Bundle b = data.getExtras();
-                if (b.containsKey(JSONAPI2.json_token)) {
-                    String token = b.getString(JSONAPI2.json_token);
+                if (b.containsKey(JSONAPI.json_token)) {
+                    String token = b.getString(JSONAPI.json_token);
                     SessionResources.getInstance().setToken(token);
                     startDeviceListActivity();
                 }
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 json.key("email").value(params[1]);
                 json.endObject();
 
-                return JSONAPI2.PostJSON("http://ws.qoala.com.br/accounts/login", json);
+                return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/login", json);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -134,14 +134,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getContext(), R.string.error_connection_failure, Toast.LENGTH_LONG).show();
             } else {
                 try {
-                    if (retorno.has(JSONAPI2.json_respondeCode)) {
+                    if (retorno.has(JSONAPI.json_respondeCode)) {
                         StringBuilder mensagem = new StringBuilder();
-                        int code = retorno.getInt(JSONAPI2.json_respondeCode);
+                        int code = retorno.getInt(JSONAPI.json_respondeCode);
 
                         switch (code) {
                             case 400://Bad Request
-                                if (retorno.has(JSONAPI2.json_Message))
-                                    mensagem.append(retorno.getString(JSONAPI2.json_Message));
+                                if (retorno.has(JSONAPI.json_Message))
+                                    mensagem.append(retorno.getString(JSONAPI.json_Message));
                                 new AlertDialog.Builder(getContext())
                                         .setTitle(R.string.title_activity_login)
                                         .setNegativeButton(R.string.action_registergo, new DialogInterface.OnClickListener() {
@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
 
                             case 201://Created
                                 //todo: receber ok do login e registrar token
-                                if (retorno.has(JSONAPI2.json_token)) {
-                                    String token = retorno.getString(JSONAPI2.json_token);
+                                if (retorno.has(JSONAPI.json_token)) {
+                                    String token = retorno.getString(JSONAPI.json_token);
                                     SessionResources.getInstance(true).setToken(token);
                                     startDeviceListActivity();
                                 }
