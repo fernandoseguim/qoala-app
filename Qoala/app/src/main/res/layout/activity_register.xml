@@ -111,13 +111,13 @@
         android:src="@drawable/logo_darkbg" />
 
     <ImageView
+        android:id="@+id/imageView8"
         android:layout_width="180dp"
         android:layout_height="80dp"
-        android:src="@drawable/logoplural"
-        android:id="@+id/imageView8"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:scaleType="centerCrop" />
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logoplural" />
 
 </RelativeLayout>
