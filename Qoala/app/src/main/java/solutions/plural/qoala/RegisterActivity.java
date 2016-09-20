@@ -105,7 +105,7 @@ public class RegisterActivity extends Activity {
                 json.key("password").value(params[2]);
                 json.endObject();
 
-                return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/register", json);
+                return JSONAPI.Post("http://ws.qoala.com.br/accounts/register", json);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -125,7 +125,6 @@ public class RegisterActivity extends Activity {
                     if (retorno.has(JSONAPI.json_respondeCode)) {
                         StringBuilder mensagem = new StringBuilder();
                         int code = retorno.getInt(JSONAPI.json_respondeCode);
-
 
                         switch (code) {
                             case 400://Bad Request
@@ -148,6 +147,7 @@ public class RegisterActivity extends Activity {
                                     i.putExtra(JSONAPI.json_token, token);
                                     setResult(RESULT_OK, i);
                                     finishActivity(101);
+                                    finish();
                                 }
                                 break;
                         }

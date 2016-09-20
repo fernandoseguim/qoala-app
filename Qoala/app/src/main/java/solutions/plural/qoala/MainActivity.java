@@ -69,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startDeviceListActivity() {
-        Intent intent = new Intent(getContext(), RegisterActivity.class);
-        intent.putExtra("email", edtEmail.getText().toString());
-        intent.putExtra("pwd", edtPassword.getText().toString());
+        Intent intent = new Intent(getContext(), MainLogadoActivity.class);
         startActivity(intent);
     }
 
@@ -92,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     String token = b.getString(JSONAPI.json_token);
                     SessionResources.getInstance().setToken(token);
                     startDeviceListActivity();
+                    finish();
                 }
             }
         }
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 json.key("email").value(params[1]);
                 json.endObject();
 
-                return JSONAPI.PostJSON("http://ws.qoala.com.br/accounts/login", json);
+                return JSONAPI.Post("http://ws.qoala.com.br/accounts/login", json);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -162,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                     String token = retorno.getString(JSONAPI.json_token);
                                     SessionResources.getInstance(true).setToken(token);
                                     startDeviceListActivity();
+                                    finish();
                                 }
                                 break;
                         }

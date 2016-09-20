@@ -1,8 +1,5 @@
 package solutions.plural.qoala.utils;
 
-/**
- * Created by gabri on 18/09/2016.
- */
 public class Util {
 
     @org.jetbrains.annotations.Contract("null -> false")

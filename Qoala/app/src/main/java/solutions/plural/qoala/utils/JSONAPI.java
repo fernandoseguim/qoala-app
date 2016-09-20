@@ -26,7 +26,7 @@ public class JSONAPI {
     public static final String json_Message = "Message";
     public static final String json_token = "Token";
 
-    public static JSONObject GetJSON(String specURL, JSONStringer jsonStringer) {
+    public static JSONObject Get(String specURL, JSONStringer jsonStringer) {
         try {
             URL url = new URL(specURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -49,7 +49,7 @@ public class JSONAPI {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "GetJSON: " + e.getMessage(), e);
+            Log.e(TAG, "Get: " + e.getMessage(), e);
             JSONObject ret = new JSONObject();
             try {
                 ret.accumulate("Error", e.getMessage());
@@ -60,7 +60,7 @@ public class JSONAPI {
         }
     }
 
-    public static JSONObject PostJSON(String specURL, JSONStringer jsonStringer) {
+    public static JSONObject Post(String specURL, JSONStringer jsonStringer) {
 
         try {
             URL url = new URL(specURL);
@@ -92,7 +92,7 @@ public class JSONAPI {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "PostJSON: " + e.getMessage(), e);
+            Log.e(TAG, "Post: " + e.getMessage(), e);
             JSONObject ret = new JSONObject();
             try {
                 ret.accumulate("Error", e.getMessage());

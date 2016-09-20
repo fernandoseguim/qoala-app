@@ -42,4 +42,7 @@ public class SessionResources {
         this.loggedIn = true;
     }
 
+    public void ValidateToken() {
+
+    }
 }
