@@ -13,22 +13,22 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import solutions.plural.qoala.SessionResources;
-
 /**
  * Created by gabriel on 07/09/2016.
  * require <code> <uses-permission android:name=”android.permission.INTERNET” /> </code> in manifest
  */
 public class JSONAPI {
     private static final String TAG = "JSONAPI";
-    public static final String json_respondeCode = "_responseCode";
+
+    public static final String json_responseCode = "_responseCode";
     public static final String json_responseMessage = "_responseMessage";
-    public static final String json_Message = "Message";
+    public static final String json_message = "message";
     public static final String json_token = "Token";
+    public static final String urlService = "http://ws.qoala.com.br/";
 
     public static JSONObject Get(String specURL, JSONStringer jsonStringer) {
         try {
-            URL url = new URL(specURL);
+            URL url = new URL(urlService + specURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             try {
                 connection.setUseCaches(false);
@@ -61,14 +61,14 @@ public class JSONAPI {
     }
 
     public static JSONObject Post(String specURL, JSONStringer jsonStringer) {
-
+        Log.i(TAG, "Post: " + specURL + " Body: " + jsonStringer);
+        HttpURLConnection connection = null;
         try {
-            URL url = new URL(specURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            URL url = null;
             try {
+                url = new URL(urlService + specURL);
+                connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
-                //connection.addRequestProperty("Accept", "application/json");
-                //connection.setRequestProperty("accept-encoding", "gzip, deflate, sdch")
 
                 // add Auth Token
                 SessionResources sr = SessionResources.getInstance();
@@ -87,19 +87,20 @@ public class JSONAPI {
 
                 return ret;
 
-            } finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "Post: " + e.getMessage(), e);
+                JSONObject ret = new JSONObject();
+                try {
+                    ret.accumulate("Error", e.getMessage());
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+                return ret;
+            }
+        } finally {
+            if (connection != null)
                 connection.disconnect();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "Post: " + e.getMessage(), e);
-            JSONObject ret = new JSONObject();
-            try {
-                ret.accumulate("Error", e.getMessage());
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
-            return ret;
         }
     }
 
@@ -110,18 +111,25 @@ public class JSONAPI {
         StringBuilder builder = new StringBuilder();
         BufferedReader stream;
         try {
-            stream = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
-        } catch (Exception ex) {
-            stream = new BufferedReader(
-                    new InputStreamReader(connection.getErrorStream()));
+            try {
+                stream = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream()));
+            } catch (Exception ex) {
+                stream = new BufferedReader(
+                        new InputStreamReader(connection.getErrorStream()));
+            }
+
+            while ((linha = stream.readLine()) != null) {
+                builder.append(linha);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Erro lendo retorno!", e);
         }
-        while ((linha = stream.readLine()) != null) {
-            builder.append(linha);
-        }
-        JSONObject ret = new JSONObject(builder.toString())
-                .accumulate(json_respondeCode, connection.getResponseCode())
-                .accumulate(json_responseMessage, connection.getResponseMessage());
+        if (builder.length() == 0)
+            builder.append("{}");
+        JSONObject ret = new JSONObject(builder.toString());
+        ret.accumulate(json_responseCode, connection.getResponseCode())
+           .accumulate(json_responseMessage, connection.getResponseMessage());
 
         return ret;
     }

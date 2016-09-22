@@ -122,14 +122,14 @@ public class RegisterActivity extends Activity {
 
             } else {
                 try {
-                    if (retorno.has(JSONAPI.json_respondeCode)) {
+                    if (retorno.has(JSONAPI.json_responseCode)) {
                         StringBuilder mensagem = new StringBuilder();
-                        int code = retorno.getInt(JSONAPI.json_respondeCode);
+                        int code = retorno.getInt(JSONAPI.json_responseCode);
 
                         switch (code) {
                             case 400://Bad Request
-                                if (retorno.has(JSONAPI.json_Message))
-                                    mensagem.append(retorno.getString(JSONAPI.json_Message));
+                                if (retorno.has(JSONAPI.json_message))
+                                    mensagem.append(retorno.getString(JSONAPI.json_message));
                                 new AlertDialog.Builder(getContext())
                                         .setTitle(R.string.title_activity_register)
                                         .setPositiveButton(android.R.string.ok, null)

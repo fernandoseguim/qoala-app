@@ -1,14 +1,15 @@
 package solutions.plural.qoala;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+
+import solutions.plural.qoala.utils.SessionResources;
 
 public class MainLogadoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SessionResources.getInstance().ValidateToken();
         setContentView(R.layout.activity_main_logado);
     }
 }

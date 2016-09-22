@@ -1,5 +1,8 @@
 package solutions.plural.qoala.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class Util {
 
     @org.jetbrains.annotations.Contract("null -> false")

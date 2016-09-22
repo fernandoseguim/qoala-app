@@ -13,13 +13,13 @@ public class JSONAPITest {
 
     @Test
     public void testGetJSON() throws Exception {
-        JSONObject retorno = JSONAPI.Get("http://ws.qoala.com.br/", new JSONStringer());
+        JSONObject retorno = JSONAPI.Get(JSONAPI.urlService, new JSONStringer());
         assertTrue(retorno.has("version"));
     }
 
     @Test
     public void testPostJSON() throws Exception {
-        JSONObject retorno = JSONAPI.Post("http://ws.qoala.com.br/", new JSONStringer());
+        JSONObject retorno = JSONAPI.Post(JSONAPI.urlService, new JSONStringer());
         assertTrue(retorno.has("version"));
     }
 }

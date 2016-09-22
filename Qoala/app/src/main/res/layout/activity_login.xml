@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:padding="0dp"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnLogin"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_marginBottom="62dp"
+        android:adjustViewBounds="false"
+        android:alpha=".7"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_img" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo_darkbg" />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        style="@style/AppTheme.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView4"
+        android:layout_toEndOf="@+id/imageView3"
+        android:layout_toRightOf="@+id/imageView3"
+        android:ems="10"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/edtPassword"
+        style="@style/AppTheme.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:ems="10"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/edtPassword"
+        android:layout_toStartOf="@+id/edtPassword"
+        android:labelFor="@id/edtEmail"
+        android:src="@drawable/icon_user" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_below="@+id/imageView3"
+        android:layout_marginTop="29dp"
+        android:labelFor="@id/edtPassword"
+        android:src="@drawable/icon_pass" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView4"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorAccent"
+        android:backgroundTintMode="multiply"
+        android:onClick="loginClick"
+        android:text="@string/action_login"
+        android:textColor="@color/colorBackground" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="20dp"
+        android:onClick="registerClick"
+        android:text="@string/action_register" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="Plural logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logoplural" />
+</RelativeLayout>

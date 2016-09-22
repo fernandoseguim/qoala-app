@@ -27,5 +27,4 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.0'
     compile 'org.jetbrains:annotations-java5:15.0'
     androidTestCompile 'org.testng:testng:6.9.6'
-    androidTestCompile 'org.testng:testng:6.9.6'
 }
