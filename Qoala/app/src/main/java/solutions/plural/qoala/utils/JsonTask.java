@@ -1,7 +1,9 @@
 package solutions.plural.qoala.utils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,6 +12,7 @@ import junit.framework.Assert;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import solutions.plural.qoala.LoginActivity;
 import solutions.plural.qoala.R;
 
 /**
@@ -44,6 +47,8 @@ import solutions.plural.qoala.R;
  */
 public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObject> {
 
+    protected final String TAG;
+
     protected ProgressDialog progressDialog;
     protected Context context = null;
     protected String action = "";
@@ -55,11 +60,13 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     public JsonTask() {
         super();
         setConfig();
+        TAG = getClass().getName() + "/" + action + ":";
     }
 
     @Override
     protected void onPreExecute() {
-        Assert.assertNotNull(this.getClass().getName() + " need CONTEXT to be set on setup()", context);
+        Assert.assertNotNull(TAG + " is needed to be set CONTEXT on setup()", context);
+        Log.d(TAG, "preExecuting");
         progressDialog = ProgressDialog.show(context, context.getString(R.string.progress_title), context.getString(R.string.progress_waiting));
     }
 
@@ -85,13 +92,13 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         progressDialog.dismiss();
-        Log.d(this.getClass().getName(), "retorno da validação: " + jsonObject);
+        Log.d(TAG, "retorno da validação: " + jsonObject);
         try {
             if (jsonObject == null || jsonObject.has("Error")) {
-                Log.e(this.getClass().getName(), "ERRO: " + jsonObject.getString("Error"));
+                Log.e(TAG, "ERRO: " + jsonObject.getString("Error"));
             } else {
                 if (jsonObject == null || jsonObject.has("Message") && jsonObject.has(JSONAPI.json_responseMessage)) {
-                    Log.e(this.getClass().getName(), "ERRO: " + jsonObject.getString(JSONAPI.json_responseCode) +
+                    Log.e(TAG, "ERRO: " + jsonObject.getString(JSONAPI.json_responseCode) +
                             " - " + jsonObject.getString(JSONAPI.json_responseMessage) +
                             "\nMessage:" + jsonObject.optString("Message"));
                 } else {
@@ -100,7 +107,16 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                         String msg = jsonObject.optString(JSONAPI.json_responseMessage) + " " + jsonObject.optString(JSONAPI.json_message);
                         jsonObject.remove(JSONAPI.json_responseCode);
                         jsonObject.remove(JSONAPI.json_responseMessage);
-                        onPostExecuted(code, msg, jsonObject);
+                        if (code == HttpStatusCode.Unauthorized) {
+                            Log.d(TAG, code + ": " + msg);
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            if (context instanceof Activity) {
+                                ((Activity) context).startActivityForResult(intent, 1);
+                                ((Activity) context).finish();
+                            }
+                        } else {
+                            onPostExecuted(code, msg, jsonObject);
+                        }
                     }
                 }
             }

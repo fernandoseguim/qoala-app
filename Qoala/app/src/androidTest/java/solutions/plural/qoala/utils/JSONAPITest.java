@@ -14,12 +14,12 @@ public class JSONAPITest {
     @Test
     public void testGetJSON() throws Exception {
         JSONObject retorno = JSONAPI.Get("");
-        assertTrue(retorno.has("version"));
+        assertTrue(retorno.has("Version"));
     }
 
     @Test
     public void testPostJSON() throws Exception {
         JSONObject retorno = JSONAPI.Post("", new JSONStringer());
-        assertTrue(retorno.has("version"));
+        assertTrue(retorno.has("Version"));
     }
 }

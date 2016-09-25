@@ -120,36 +120,34 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
-            if (jsonObject.has(JSONAPI.json_responseCode)) {
 
-                switch (responseCode) {
-                    case 400://Bad Request
-                        new AlertDialog.Builder(getContext())
-                                .setTitle(R.string.title_activity_login)
-                                .setNegativeButton(R.string.action_registergo, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startRegisterActivity();
-                                    }
-                                })
-                                .setPositiveButton(android.R.string.ok, null)
-                                .setMessage(responseMessage)
-                                .create()
-                                .show();
-                        break;
+            switch (responseCode) {
+                case 400://Bad Request
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.title_activity_login)
+                            .setNegativeButton(R.string.action_registergo, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startRegisterActivity();
+                                }
+                            })
+                            .setPositiveButton(android.R.string.ok, null)
+                            .setMessage(responseMessage)
+                            .create()
+                            .show();
+                    break;
 
-                    case 200://OK
-                    case 201://Created
-                        //todo: receber ok do login e registrar token
-                        if (jsonObject.has(JSONAPI.json_token)) {
-                            String token = jsonObject.optString(JSONAPI.json_token);
-                            SessionResources sr = SessionResources.getInstance(true);
-                            sr.setToken(token, getContext());
-                            sr.setUser(UserDTO.fromJson(jsonObject.toString()));
-                            startDeviceListActivity();
-                        }
-                        break;
-                }
+                case 200://OK
+                case 201://Created
+                    //todo: receber ok do login e registrar token
+                    if (jsonObject.has(JSONAPI.json_token)) {
+                        String token = jsonObject.optString(JSONAPI.json_token);
+                        SessionResources sr = SessionResources.getInstance(true);
+                        sr.setToken(token, getContext());
+                        sr.setUser(UserDTO.fromJson(jsonObject.toString()));
+                        startDeviceListActivity();
+                    }
+                    break;
             }
         }
     }

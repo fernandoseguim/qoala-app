@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import solutions.plural.qoala.utils.HttpMethod;
+import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.SessionResources;
 
@@ -22,7 +21,7 @@ public class ValidaLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //TODO montar layout do loading... (logo no centro e bg no fundo)
     }
 
     @Override
@@ -30,19 +29,12 @@ public class ValidaLoginActivity extends Activity {
         super.onStart();
         SessionResources sr = SessionResources.getInstance();
         if (!sr.getToken(this).isEmpty()) {
-            try {
-                JSONStringer json = new JSONStringer()
-                        .object()
-                        .key("token").value(sr.getToken())
-                        .endObject();
-                new ValidateLoginTask().execute(json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            new ValidateLoginTask().execute();
         } else {
             startLoginActivity();
         }
     }
+
 
     private void startDeviceListActivity() {
         Intent intent = new Intent(getContext(), MainLogadoActivity.class);
@@ -61,19 +53,19 @@ public class ValidaLoginActivity extends Activity {
         @Override
         protected void setConfig() {
             this.context = getContext();
-            this.action = "Accounts/ValidateToken";
-            this.httpMethod = HttpMethod.POST;
+            this.action = "Accounts/Me";
+            this.httpMethod = HttpMethod.GET;
         }
 
         @Override
         protected void onPostExecuted(int respondeCode, String respondeMessage, JSONObject jsonObject) {
-
             switch (respondeCode) {
-                case 410:// Gone
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.NotFound:
                     SessionResources.getInstance(true).setToken("", getContext());
                     startLoginActivity();
                     break;
-                case 202:// Accepted
+                case HttpStatusCode.OK:
                     startDeviceListActivity();
                     break;
             }
