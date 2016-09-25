@@ -18,15 +18,16 @@ import java.net.URL;
  * require <code> <uses-permission android:name=”android.permission.INTERNET” /> </code> in manifest
  */
 public class JSONAPI {
-    private static final String TAG = "JSONAPI";
-
     public static final String json_responseCode = "_responseCode";
     public static final String json_responseMessage = "_responseMessage";
-    public static final String json_message = "message";
-    public static final String json_token = "Token";
-    public static final String urlService = "http://ws.qoala.com.br/";
+    // Resposta de do WS
+    public static final String json_message = "Message";
+    public static final String json_token = "token";
+    public static final String json_user = "user";
+    private static final String TAG = "JSONAPI";
+    private static final String urlService = "http://ws.qoala.com.br/";
 
-    public static JSONObject Get(String specURL, JSONStringer jsonStringer) {
+    public static JSONObject Get(String specURL) {
         try {
             URL url = new URL(urlService + specURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -37,11 +38,8 @@ public class JSONAPI {
 
                 // add Auth Token
                 SessionResources sr = SessionResources.getInstance();
-                if (sr.isLoggedIn())
+                if (sr.hasToken())
                     connection.addRequestProperty("Authorization", "Token " + sr.getToken());
-
-                if (jsonStringer != null)
-                    writeInputStream(connection, jsonStringer);
 
                 return readInputStream(connection);
             } finally {
@@ -72,7 +70,7 @@ public class JSONAPI {
 
                 // add Auth Token
                 SessionResources sr = SessionResources.getInstance();
-                if (sr.isLoggedIn())
+                if (sr.hasToken())
                     connection.addRequestProperty("Authorization", "Token " + sr.getToken());
 
                 if (jsonStringer != null)
@@ -129,7 +127,7 @@ public class JSONAPI {
             builder.append("{}");
         JSONObject ret = new JSONObject(builder.toString());
         ret.accumulate(json_responseCode, connection.getResponseCode())
-           .accumulate(json_responseMessage, connection.getResponseMessage());
+                .accumulate(json_responseMessage, connection.getResponseMessage());
 
         return ret;
     }
@@ -148,4 +146,6 @@ public class JSONAPI {
             stream.close();
         }
     }
+
+
 }

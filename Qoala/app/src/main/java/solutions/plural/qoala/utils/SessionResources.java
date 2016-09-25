@@ -1,27 +1,24 @@
 package solutions.plural.qoala.utils;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import solutions.plural.qoala.R;
+import solutions.plural.qoala.Models.UserDTO;
 
 /**
  * Created by gabri on 28/08/2016.
  */
 public class SessionResources {
+    //
+    public static final String PREFS_TOKEN = "UserPrefs";
     private static SessionResources ourInstance = new SessionResources();
-
     private String token;
+    private UserDTO user;
+
+    private SessionResources() {
+        token = "";
+    }
 
     public static SessionResources getInstance() {
         return getInstance(false);
@@ -36,15 +33,29 @@ public class SessionResources {
         return ourInstance;
     }
 
-    private SessionResources() {
-        token = "";
-    }
-
-    public boolean isLoggedIn() {
+    public boolean hasToken() {
         return !token.isEmpty();
     }
 
+    /**
+     * Retorna o token armazenado na sessão, não carrega se não houver
+     *
+     * @return token da sessão
+     */
     public String getToken() {
+        return getToken(null);
+    }
+
+    /**
+     * Busca o token armazenado nas preferencias se não encontrar na sessão.
+     *
+     * @param ctx <{@link android.app.Activity} do contexto atual, será usado para buscar valor armazenado
+     * @return
+     */
+    public String getToken(Context ctx) {
+        if (token.isEmpty())
+            if (ctx != null)
+                loadToken(ctx);
         return token;
     }
 
@@ -53,15 +64,12 @@ public class SessionResources {
         saveToken(ctx);
     }
 
-    //
-    public static final String PREFS_TOKEN = "UserPrefs";
-
     /**
      * Carrega o Token salvo
      *
      * @param ctx Activity do contexto
      */
-    public void loadToken(Context ctx) {
+    private void loadToken(Context ctx) {
         // Restore Token ID from sharedPreferences
         SharedPreferences settings = ctx.getSharedPreferences(PREFS_TOKEN, 0);
         token = settings.getString(JSONAPI.json_token, "");
@@ -82,4 +90,11 @@ public class SessionResources {
         editor.commit();
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
 }

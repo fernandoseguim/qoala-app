@@ -89,16 +89,11 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        style="@style/AppTheme.Button"
         android:layout_below="@+id/edtPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:background="@color/colorAccent"
-        android:backgroundTintMode="multiply"
+        android:layout_marginTop="40dp"
         android:onClick="registerClick"
-        android:text="@string/action_registergo"
-        android:textColor="@color/colorBackground" />
+        android:text="@string/action_registergo" />
 
     <ImageView
         android:id="@+id/imageView7"

@@ -2,30 +2,31 @@ package solutions.plural.qoala;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.JSONAPI;
+import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.Util;
 
 public class RegisterActivity extends Activity {
 
-    public Context getContext() {
-        return RegisterActivity.this;
-    }
-
     private EditText edtEmail = null;
     private EditText edtPassword = null;
     private EditText edtUsername = null;
+
+    public Context getContext() {
+        return RegisterActivity.this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,87 +77,55 @@ public class RegisterActivity extends Activity {
                 edtPassword.requestFocus();
             return;
         }
-
-        new RegisterTask().execute(
-                edtUsername.getText().toString(),
-                edtEmail.getText().toString(),
-                edtPassword.getText().toString());
+        try {
+            JSONStringer json = new JSONStringer()
+                    .object()
+                    .key("name").value(edtUsername.getText().toString())
+                    .key("email").value(edtEmail.getText().toString())
+                    .key("password").value(edtPassword.getText().toString())
+                    .endObject();
+            new RegisterTask().execute(json);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
     }
 
     /**
      * Task para registro de usuario
      */
-    private class RegisterTask extends AsyncTask<String, Integer, JSONObject> {
-
-        ProgressDialog progressDialog;
+    private class RegisterTask extends JsonTask {
 
         @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.progress_title), getString(R.string.progress_registering));
+        protected void setConfig() {
+            this.context = getContext();
+            this.action = "Accounts/Register";
+            this.httpMethod = HttpMethod.POST;
         }
 
         @Override
-        protected JSONObject doInBackground(String... params) {
-            try {
-                JSONStringer json = new JSONStringer();
-                json.object();
-                json.key("name").value(params[0]);
-                json.key("email").value(params[1]);
-                json.key("password").value(params[2]);
-                json.endObject();
+        protected void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
+            switch (responseCode) {
+                case 400://Bad Request
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(R.string.title_activity_register)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .setMessage(responseMessage)
+                            .create()
+                            .show();
+                    break;
 
-                return JSONAPI.Post("http://ws.qoala.com.br/accounts/register", json);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject retorno) {
-            super.onPostExecute(retorno);
-            progressDialog.dismiss();
-            if (retorno == null || retorno.has("Error")) {
-                Toast.makeText(getContext(), R.string.error_connection_failure, Toast.LENGTH_LONG).show();
-
-            } else {
-                try {
-                    if (retorno.has(JSONAPI.json_responseCode)) {
-                        StringBuilder mensagem = new StringBuilder();
-                        int code = retorno.getInt(JSONAPI.json_responseCode);
-
-                        switch (code) {
-                            case 400://Bad Request
-                                if (retorno.has(JSONAPI.json_message))
-                                    mensagem.append(retorno.getString(JSONAPI.json_message));
-                                new AlertDialog.Builder(getContext())
-                                        .setTitle(R.string.title_activity_register)
-                                        .setPositiveButton(android.R.string.ok, null)
-                                        .setMessage(mensagem)
-                                        .create()
-                                        .show();
-                                break;
-
-                            case 201:
-                                //todo: receber ok do login e registrar token
-                                if (retorno.has(JSONAPI.json_token)) {
-                                    String token = retorno.getString(JSONAPI.json_token);
-                                    //SessionResources.getInstance(true).setToken(token);
-                                    Intent i = getIntent();
-                                    i.putExtra(JSONAPI.json_token, token);
-                                    setResult(RESULT_OK, i);
-                                    finishActivity(101);
-                                    finish();
-                                }
-                                break;
-                        }
+                case 201:
+                    //todo: receber ok do login e registrar token
+                    if (jsonObject.has(JSONAPI.json_token)) {
+                        String token = jsonObject.optString(JSONAPI.json_token);
+                        Intent i = getIntent();
+                        i.putExtra(JSONAPI.json_token, token);
+                        setResult(RESULT_OK, i);
+                        finishActivity(101);
+                        finish();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    break;
             }
         }
     }
-
 }

@@ -1,18 +1,16 @@
 package solutions.plural.qoala;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.utils.JSONAPI;
+import solutions.plural.qoala.utils.HttpMethod;
+import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.SessionResources;
 
 public class ValidaLoginActivity extends Activity {
@@ -31,11 +29,18 @@ public class ValidaLoginActivity extends Activity {
     protected void onStart() {
         super.onStart();
         SessionResources sr = SessionResources.getInstance();
-        if (sr.getToken().isEmpty())
-            sr.loadToken(this);
-
-        if (!sr.getToken().isEmpty()) {
-            new ValidateLoginTask().execute(sr.getToken());
+        if (!sr.getToken(this).isEmpty()) {
+            try {
+                JSONStringer json = new JSONStringer()
+                        .object()
+                        .key("token").value(sr.getToken())
+                        .endObject();
+                new ValidateLoginTask().execute(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            startLoginActivity();
         }
     }
 
@@ -51,59 +56,27 @@ public class ValidaLoginActivity extends Activity {
         finish();
     }
 
-    private class ValidateLoginTask extends AsyncTask<String, Integer, JSONObject> {
-
-        ProgressDialog progressDialog;
+    private class ValidateLoginTask extends JsonTask {
 
         @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getContext(), getContext().getString(R.string.progress_title), getContext().getString(R.string.progress_waiting));
+        protected void setConfig() {
+            this.context = getContext();
+            this.action = "Accounts/ValidateToken";
+            this.httpMethod = HttpMethod.POST;
         }
 
         @Override
-        protected JSONObject doInBackground(String... params) {
-            try {
-                JSONStringer json = new JSONStringer();
-                json.object();
-                json.key(JSONAPI.json_token).value(params[0]);
-                json.endObject();
+        protected void onPostExecuted(int respondeCode, String respondeMessage, JSONObject jsonObject) {
 
-                JSONObject jso = JSONAPI.Post("Accounts/ValidadeToken", json);
-
-                return jso;
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject retorno) {
-            progressDialog.dismiss();
-            Log.d("LOGIN", "retorno da validação: " + retorno);
-            try {
-                if (retorno == null || retorno.has("Error")) {
-                    Log.e("LOGIN", "ERRO: " + retorno.getString("Error"));
-                } else {
-                    if (retorno.has(JSONAPI.json_responseCode)) {
-                        int code = retorno.getInt(JSONAPI.json_responseCode);
-                        switch (code) {
-                            case 410:// Gone
-                                SessionResources.getInstance(true).setToken("", getContext());
-                                startLoginActivity();
-                                break;
-                            case 202:// Accepted
-                                startDeviceListActivity();
-                                break;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            switch (respondeCode) {
+                case 410:// Gone
+                    SessionResources.getInstance(true).setToken("", getContext());
+                    startLoginActivity();
+                    break;
+                case 202:// Accepted
+                    startDeviceListActivity();
+                    break;
             }
         }
     }
-
-
 }
