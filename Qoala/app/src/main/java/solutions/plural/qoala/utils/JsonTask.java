@@ -96,7 +96,7 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                             "\nMessage:" + jsonObject.optString("Message"));
                 } else {
                     if (jsonObject.has(JSONAPI.json_responseCode)) {
-                        int code = jsonObject.optInt(JSONAPI.json_responseCode);
+                        @HttpStatusCode int code = jsonObject.optInt(JSONAPI.json_responseCode);
                         String msg = jsonObject.optString(JSONAPI.json_responseMessage) + " " + jsonObject.optString(JSONAPI.json_message);
                         jsonObject.remove(JSONAPI.json_responseCode);
                         jsonObject.remove(JSONAPI.json_responseMessage);
@@ -109,7 +109,7 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
         }
     }
 
-    protected abstract void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject);
+    protected abstract void onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject);
 
     /**
      * Este metodo deve ser usado para configurar as seguintes variaveis.
