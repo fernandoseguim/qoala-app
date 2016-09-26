@@ -125,6 +125,14 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
         }
     }
 
+    /**
+     * <p>Este metodo é Executado depois da chamada de <code>onPostExecute</code>.
+     * </p>
+     *
+     * @param responseCode
+     * @param responseMessage
+     * @param jsonObject
+     */
     protected abstract void onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject);
 
     /**

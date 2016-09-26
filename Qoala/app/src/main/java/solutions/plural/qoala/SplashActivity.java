@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
+import solutions.plural.qoala.Models.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.SessionResources;
 
-public class ValidaLoginActivity extends Activity {
+public class SplashActivity extends Activity {
 
     private Context getContext() {
         return this;
@@ -21,7 +23,7 @@ public class ValidaLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO montar layout do loading... (logo no centro e bg no fundo)
+        setContentView(R.layout.activity_splash);
     }
 
     @Override
@@ -58,6 +60,16 @@ public class ValidaLoginActivity extends Activity {
         }
 
         @Override
+        protected JSONObject doInBackground(JSONStringer... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return super.doInBackground(params);
+        }
+
+        @Override
         protected void onPostExecuted(int respondeCode, String respondeMessage, JSONObject jsonObject) {
             switch (respondeCode) {
                 case HttpStatusCode.Unauthorized:
@@ -66,6 +78,8 @@ public class ValidaLoginActivity extends Activity {
                     startLoginActivity();
                     break;
                 case HttpStatusCode.OK:
+                    SessionResources sr = SessionResources.getInstance(true);
+                    sr.setUser(UserDTO.fromJson(jsonObject.toString()));
                     startDeviceListActivity();
                     break;
             }

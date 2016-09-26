@@ -90,6 +90,17 @@ public class SessionResources {
         editor.commit();
     }
 
+    /**
+     * Reinicia Preferencias do Token
+     *
+     * @param ctx Activity do contexto
+     */
+    private void clear(Context ctx) {
+        SharedPreferences settings = ctx.getSharedPreferences(PREFS_TOKEN, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear().commit();
+    }
+
     public UserDTO getUser() {
         return user;
     }
