@@ -15,6 +15,9 @@
     <string name="action_login">Entrar</string>
     <string name="action_register">Eu não tenho ainda, registrar</string>
     <string name="action_registergo">Registrar e Entrar</string>
+    <string name="action_logout">Sair</string>
+    <string name="action_myprofile">Meu Perfil</string>
+    <string name="action_mydevices">Meus dispositivos</string>
 
     <string name="error_invalid_email">Este e-mail é inválido</string>
     <string name="error_invalid_password">Esta senha é muito curta</string>
