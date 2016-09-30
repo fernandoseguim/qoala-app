@@ -4,6 +4,7 @@
 
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_register">Register</string>
+    <string name="title_activity_main_logado">Qoala App</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -33,7 +34,6 @@
     <string name="progress_title">Processing...</string>
     <string name="progress_waiting">Working your request...</string>
     <string name="progress_registering">Registrando usuário</string>
-    <string name="title_activity_main_logado">MainLogado</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

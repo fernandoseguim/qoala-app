@@ -20,17 +20,15 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="logoutClick"
-            android:text="@android:string/ok" />
-
         <TextView
             android:id="@+id/txtUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/lista"
+            android:isScrollContainer="true"
+            android:layout_height="500dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

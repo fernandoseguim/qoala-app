@@ -20,7 +20,7 @@ android {
     }
 }
 
-repositories{
+repositories {
     mavenCentral();
 }
 
@@ -32,6 +32,7 @@ dependencies {
     compile 'org.jetbrains:annotations-java5:15.0'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.android.support:support-vector-drawable:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'org.testng:testng:6.9.6'
 }
