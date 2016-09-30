@@ -19,8 +19,7 @@ public class CommentsDTO {
         return new Gson().fromJson(json, CommentsDTO.class );
     }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new Gson().toJson(this);
     }
 

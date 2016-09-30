@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,13 +34,30 @@ public class MainLogadoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_logado);
 
         TextView txtUser = (TextView) findViewById(R.id.txtUser);
-        txtUser.setText(SessionResources.getInstance().getUser().toString());
+        txtUser.setText(SessionResources.getInstance().getUser().toJson());
 
         setupMenuBar();
 
-        new PostsTask().execute();
-
         lista = (ListView) findViewById(R.id.lista);
+
+        lista.setVerticalScrollBarEnabled(true);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BlogAdapter.ViewHolder holder = (BlogAdapter.ViewHolder)view.getTag();
+                // TODO: criar uma activity para abrir o conteudo do post e os commentarios
+                Intent intent = new Intent(getContext(), PostDetailActivity.class);
+                intent.putExtra("post", holder.post.toJson());
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new PostsTask().setSilent(true).execute();
     }
 
     /**

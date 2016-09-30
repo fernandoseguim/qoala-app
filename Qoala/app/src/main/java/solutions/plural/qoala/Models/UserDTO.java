@@ -16,8 +16,7 @@ public class UserDTO {
         return new Gson().fromJson(json, UserDTO.class);
     }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new Gson().toJson(this);
     }
 

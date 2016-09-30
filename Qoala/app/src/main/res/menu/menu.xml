@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_myprofile"
+        android:icon="@drawable/icon_user"
+        android:title="@string/action_myprofile"
+        app:showAsAction="ifRoom" />
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/action_myprofile"
-            android:icon="@drawable/icon_user"
-            android:title="@string/action_myprofile"
-            app:showAsAction="withText" />
+    <item
+        android:id="@+id/action_mydevices"
+        android:icon="@drawable/icon_pass"
+        android:title="@string/action_mydevices"
+        app:showAsAction="ifRoom" />
 
-        <item
-            android:id="@+id/action_mydevices"
-            android:icon="@drawable/icon_launcher"
-            android:title="@string/action_mydevices" />
-    </group>
-    <group>
-        <item
-            android:id="@+id/action_settings"
-            android:title="@string/action_settings"
-            app:showAsAction="never" />
-    </group>
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="collapseActionView|never" />
+
     <item
         android:id="@+id/action_logout"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"

@@ -17,13 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".LoginActivity">
+            android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoginActivity" />
@@ -34,6 +33,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainLogadoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="solutions.plural.qoala.MainLogadoActivity" />
+        </activity>
+        <activity
+            android:name=".PostDetailActivity"
+            android:label="@string/title_activity_post"
             android:parentActivityName=".MainLogadoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -17,12 +17,9 @@ public class BlogDTO {
     public int current_page;
     public boolean previous_page;
 
-    public static BlogDTO fromJson(String json) {
-        return new Gson().fromJson(json, BlogDTO.class );
-    }
+    public static BlogDTO fromJson(String json) { return new Gson().fromJson(json, BlogDTO.class ); }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new Gson().toJson(this);
     }
 

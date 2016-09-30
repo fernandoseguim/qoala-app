@@ -52,10 +52,16 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     protected ProgressDialog progressDialog;
     protected Context context = null;
     protected String action = "";
+    private boolean _silent = false;
 
     protected
     @HttpMethod
     String httpMethod;
+
+    public JsonTask setSilent(boolean silent) {
+        this._silent = silent;
+        return this;
+    }
 
     public JsonTask() {
         super();
@@ -66,8 +72,9 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     @Override
     protected void onPreExecute() {
         Assert.assertNotNull(TAG + " is needed to be set CONTEXT on setup()", context);
-        Log.d(TAG, "preExecuting");
-        progressDialog = ProgressDialog.show(context, context.getString(R.string.progress_title), context.getString(R.string.progress_waiting));
+        Log.d(TAG, "preExecuting, Silent = " + _silent);
+        if (!_silent)
+            progressDialog = ProgressDialog.show(context, context.getString(R.string.progress_title), context.getString(R.string.progress_waiting));
     }
 
     @Override
@@ -91,7 +98,8 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        progressDialog.dismiss();
+        if (!_silent)
+            progressDialog.dismiss();
         Log.d(TAG, "retorno da validação: " + jsonObject);
         try {
             if (jsonObject == null || jsonObject.has("Error")) {
@@ -138,7 +146,7 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     /**
      * Este metodo deve ser usado para configurar as seguintes variaveis.
      * <p>
-     * <co
+     * <p>
      * <code>this.context=getContext();
      * this.action = "Accounts/ValidateToken";
      * this.httpMethod = HttpMethod.POST;</code>

@@ -1,14 +1,18 @@
 package solutions.plural.qoala.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by gabri on 29/09/2016.
  */
 
-public class PostsDTO {
+public class PostsDTO implements Serializable {
 
     public int id_post;
     public String title;
@@ -22,9 +26,7 @@ public class PostsDTO {
         return new Gson().fromJson(json, PostsDTO.class );
     }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return new Gson().toJson(this);
     }
-
 }
