@@ -1,6 +1,5 @@
 package solutions.plural.qoala;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import solutions.plural.qoala.Models.BlogDTO;
+import solutions.plural.qoala.Models.UserDTO;
 import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
@@ -36,10 +36,11 @@ public class MainLogadoActivity extends AppCompatActivity {
         new PostsTask().setSilent(true).execute();
 
         TextView txtUser = (TextView) findViewById(R.id.txtUser);
-        txtUser.setText(SessionResources.getInstance().getUser().toJson());
+        UserDTO user = SessionResources.getInstance().getUser();
+        if (user != null)
+            txtUser.setText(user.toJson());
 
         setupMenuBar();
-
 
         lista = (ListView) findViewById(R.id.lista);
 

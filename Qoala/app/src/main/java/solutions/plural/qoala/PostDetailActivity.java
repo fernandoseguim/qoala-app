@@ -1,9 +1,11 @@
 package solutions.plural.qoala;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.widget.TextView;
 
 import solutions.plural.qoala.Models.PostsDTO;
@@ -34,9 +36,11 @@ public class PostDetailActivity extends AppCompatActivity {
 
         post_content = (TextView) findViewById(R.id.post_content);
 
-        // TODO: 01/10/2016 Adicionar compatibilidade com conteudo HTML!
-        post_content.setText(post.content);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            post_content.setText(Html.fromHtml(post.content, Html.FROM_HTML_MODE_COMPACT));
+        }else{
+            post_content.setText(Html.fromHtml(post.content));
+        }
     }
 
     @Override
