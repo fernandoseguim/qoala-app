@@ -54,6 +54,7 @@ public class SplashActivity extends Activity {
 
         @Override
         protected void setConfig() {
+            setSilent(true);
             this.context = getContext();
             this.action = "Accounts/Me";
             this.httpMethod = HttpMethod.GET;
@@ -70,19 +71,21 @@ public class SplashActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecuted(int respondeCode, String respondeMessage, JSONObject jsonObject) {
+        protected boolean onPostExecuted(int respondeCode, String respondeMessage, JSONObject jsonObject) {
             switch (respondeCode) {
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.NotFound:
                     SessionResources.getInstance(true).setToken("", getContext());
                     startLoginActivity();
-                    break;
+                    return true;
                 case HttpStatusCode.OK:
                     SessionResources sr = SessionResources.getInstance(true);
                     sr.setUser(UserDTO.fromJson(jsonObject.toString()));
                     startDeviceListActivity();
-                    break;
+                    return true;
             }
+            return false;
+
         }
     }
 }

@@ -103,7 +103,7 @@ public class RegisterActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
+        protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
             switch (responseCode) {
                 case 400://Bad Request
                     new AlertDialog.Builder(getContext())
@@ -112,7 +112,7 @@ public class RegisterActivity extends Activity {
                             .setMessage(responseMessage)
                             .create()
                             .show();
-                    break;
+                    return true;
 
                 case 201:
                     //todo: receber ok do login e registrar token
@@ -124,8 +124,9 @@ public class RegisterActivity extends Activity {
                         finishActivity(101);
                         finish();
                     }
-                    break;
+                    return true;
             }
+            return false;
         }
     }
 }

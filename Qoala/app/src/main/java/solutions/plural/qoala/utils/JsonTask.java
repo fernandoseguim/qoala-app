@@ -1,10 +1,12 @@
 package solutions.plural.qoala.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import junit.framework.Assert;
@@ -112,18 +114,31 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                 } else {
                     if (jsonObject.has(JSONAPI.json_responseCode)) {
                         @HttpStatusCode int code = jsonObject.optInt(JSONAPI.json_responseCode);
-                        String msg = jsonObject.optString(JSONAPI.json_responseMessage) + " " + jsonObject.optString(JSONAPI.json_message);
+                        String message = jsonObject.optString(JSONAPI.json_responseMessage) + " " + jsonObject.optString(JSONAPI.json_message);
                         jsonObject.remove(JSONAPI.json_responseCode);
                         jsonObject.remove(JSONAPI.json_responseMessage);
                         if (code == HttpStatusCode.Unauthorized) {
-                            Log.d(TAG, code + ": " + msg);
-                            Intent intent = new Intent(context, LoginActivity.class);
+                            Log.i(TAG, code + ": " + message);
                             if (context instanceof Activity) {
-                                ((Activity) context).startActivityForResult(intent, 1);
+                                ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
                                 ((Activity) context).finish();
                             }
                         } else {
-                            onPostExecuted(code, msg, jsonObject);
+
+                            boolean postExecutedok = onPostExecuted(code, message, jsonObject);
+                            if (!postExecutedok) {
+                                switch (code) {
+                                    case HttpStatusCode.BadRequest://Bad Request
+                                        Log.e(TAG, String.format("Code: {0}; Message: {1}.", code, message));
+                                        new AlertDialog.Builder(context)
+                                                .setTitle(R.string.app_name)
+                                                .setPositiveButton(android.R.string.ok, null)
+                                                .setMessage(message)
+                                                .create()
+                                                .show();
+                                        break;
+                                }
+                            }
                         }
                     }
                 }
@@ -135,13 +150,25 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
 
     /**
      * <p>Este metodo é Executado depois da chamada de <code>onPostExecute</code>.
-     * </p>
-     *
+     * <pre class="prettyprint">
+     *  protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
+     *     switch (responseCode) {
+     *        case HttpStatusCode.OK:
+     *           reloadPosts();
+     *           return true;
+     *     }
+     *     return false;
+     *  }
+     *  </pre>     *
      * @param responseCode
      * @param responseMessage
      * @param jsonObject
+     * @return <p>É importante que o retorno seja <code>true</code>, se foi feito o tratamento do retorno
+     *  para não apresentar uma mensagem de alerta com a mensagem de retorno. </p><p>Quando
+     *  <code>false</code>, nenhuma mensagem será exibida.</p>
      */
-    protected abstract void onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject);
+    @NonNull
+    protected abstract boolean onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject);
 
     /**
      * Este metodo deve ser usado para configurar as seguintes variaveis.

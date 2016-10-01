@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
+        protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
 
             switch (responseCode) {
                 case 400://Bad Request
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setMessage(responseMessage)
                             .create()
                             .show();
-                    break;
+                    return true;
 
                 case 200://OK
                 case 201://Created
@@ -147,8 +147,9 @@ public class LoginActivity extends AppCompatActivity {
                         sr.setUser(UserDTO.fromJson(jsonObject.toString()));
                         startDeviceListActivity();
                     }
-                    break;
+                    return true;
             }
+            return false;
         }
     }
 }

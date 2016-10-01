@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,8 +16,8 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.Models.BlogDTO;
+import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
@@ -32,11 +33,13 @@ public class MainLogadoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_logado);
+        new PostsTask().setSilent(true).execute();
 
         TextView txtUser = (TextView) findViewById(R.id.txtUser);
         txtUser.setText(SessionResources.getInstance().getUser().toJson());
 
         setupMenuBar();
+
 
         lista = (ListView) findViewById(R.id.lista);
 
@@ -45,7 +48,7 @@ public class MainLogadoActivity extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BlogAdapter.ViewHolder holder = (BlogAdapter.ViewHolder)view.getTag();
+                BlogAdapter.ViewHolder holder = (BlogAdapter.ViewHolder) view.getTag();
                 // TODO: criar uma activity para abrir o conteudo do post e os commentarios
                 Intent intent = new Intent(getContext(), PostDetailActivity.class);
                 intent.putExtra("post", holder.post.toJson());
@@ -57,7 +60,8 @@ public class MainLogadoActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new PostsTask().setSilent(true).execute();
+        if (blog == null)
+            new PostsTask().setSilent(true).execute();
     }
 
     /**
@@ -67,6 +71,11 @@ public class MainLogadoActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitle(R.string.app_name);
         setSupportActionBar(myToolbar);
+        ActionBar b = getSupportActionBar();
+        assert b != null;
+        b.setDisplayUseLogoEnabled(true);
+        b.setDisplayShowHomeEnabled(true);
+        b.setLogo(R.mipmap.ic_launcher);
     }
 
     public void logout() {
@@ -138,22 +147,14 @@ public class MainLogadoActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
+        protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
             switch (responseCode) {
-                case HttpStatusCode.BadRequest://Bad Request
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.title_activity_main_logado)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setMessage(responseMessage)
-                            .create()
-                            .show();
-                    break;
-
                 case HttpStatusCode.OK:
                     blog = BlogDTO.fromJson(jsonObject.toString());
                     reloadPosts();
-                    break;
+                    return true;
             }
+            return false;
         }
     }
 

@@ -22,7 +22,6 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
     private final BlogDTO blog;
 
     public static class ViewHolder {
-        public TextView text_Id;
         public TextView text_Title;
         public TextView text_Content;
         public PostsDTO post;
@@ -58,23 +57,23 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
             LayoutInflater inflater = context.getLayoutInflater();
             rowView = inflater.inflate(R.layout.itemlist_blog_posts, null);
+
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.text_Id = (TextView) rowView.findViewById(R.id.post_id);
             viewHolder.text_Title = (TextView) rowView.findViewById(R.id.post_title);
             viewHolder.text_Content = (TextView) rowView.findViewById(R.id.post_content);
             rowView.setTag(viewHolder);
 
         }
+
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
         PostsDTO post = getItem(position);
         holder.post=post;
 
-        holder.text_Id.setText(String.valueOf(post.id_post));
         holder.text_Title.setText(post.title);
-        holder.text_Content.setText(post.content);
+        holder.text_Content.setText(post.getContentPartial());
 
         return rowView;
     }

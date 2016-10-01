@@ -1,8 +1,5 @@
 package solutions.plural.qoala.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.Gson;
 
 import java.io.Serializable;
@@ -20,10 +17,17 @@ public class PostsDTO implements Serializable {
     public String published_at;
     public String id_user;
 
+    public String getContentPartial() {
+        if (content.length() > 25)
+            return content.substring(0, 25).concat("(...)");
+        else
+            return content;
+    }
+
     public List<CommentsDTO> comments;
 
     public static PostsDTO fromJson(String json) {
-        return new Gson().fromJson(json, PostsDTO.class );
+        return new Gson().fromJson(json, PostsDTO.class);
     }
 
     public String toJson() {

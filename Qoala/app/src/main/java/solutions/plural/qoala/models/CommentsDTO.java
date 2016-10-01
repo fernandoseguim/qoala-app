@@ -11,9 +11,9 @@ public class CommentsDTO {
     public int id_comment;;
     public String content;
     public String id_post;
-    public String id_user;
-    public String created_at;
-    public String approved_at;
+    //public String id_user;
+    //public String created_at;
+    //public String approved_at;
 
     public static CommentsDTO fromJson(String json) {
         return new Gson().fromJson(json, CommentsDTO.class );

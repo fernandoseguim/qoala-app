@@ -5,13 +5,13 @@
         android:id="@+id/action_myprofile"
         android:icon="@drawable/icon_user"
         android:title="@string/action_myprofile"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_mydevices"
         android:icon="@drawable/icon_pass"
         android:title="@string/action_mydevices"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"

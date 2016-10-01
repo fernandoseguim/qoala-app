@@ -4,6 +4,7 @@
 
     <string name="title_activity_register">Cadastro</string>
     <string name="title_activity_login">Entrar</string>
+    <string name="title_activity_post">Newsletter</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (Opcional)</string>
@@ -31,8 +32,8 @@
 
     <string name="txt_toregister">Para registrar-se, você só precisa\n digitar seu nome, e-mail e senha \nnos campos abaixo e registrar</string>
 
-    <string name="progress_title">Processando...</string>
-    <string name="progress_waiting">Processando sua requisição...</string>
+    <string name="progress_title">Processando…</string>
+    <string name="progress_waiting">Processando sua requisição…</string>
     <string name="progress_registering">Registrando usuário</string>
 
 </resources>
