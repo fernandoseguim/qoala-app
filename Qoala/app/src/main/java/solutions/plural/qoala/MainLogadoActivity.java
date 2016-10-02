@@ -50,9 +50,9 @@ public class MainLogadoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BlogAdapter.ViewHolder holder = (BlogAdapter.ViewHolder) view.getTag();
-                // TODO: criar uma activity para abrir o conteudo do post e os commentarios
+                // TODO: criar uma activity para abrir o conteudo do comment e os commentarios
                 Intent intent = new Intent(getContext(), PostDetailActivity.class);
-                intent.putExtra("post", holder.post.toJson());
+                intent.putExtra("comment", holder.post.toJson());
                 startActivity(intent);
             }
         });
@@ -107,7 +107,7 @@ public class MainLogadoActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_myprofile:
-                i = new Intent(this, MainLogadoActivity.class);
+                i = new Intent(this, MyProfileActivity.class);
                 startActivity(i);
                 return true;
 

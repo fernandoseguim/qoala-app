@@ -46,6 +46,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="solutions.plural.qoala.MainLogadoActivity" />
         </activity>
+        <activity android:name=".MyProfileActivity"
+            android:label="@string/title_activity_myprofile"
+            android:parentActivityName=".MainLogadoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="solutions.plural.qoala.MainLogadoActivity" />
+        </activity>
     </application>
 
 </manifest>

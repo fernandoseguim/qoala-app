@@ -5,6 +5,8 @@
     <string name="title_activity_register">Cadastro</string>
     <string name="title_activity_login">Entrar</string>
     <string name="title_activity_post">Newsletter</string>
+    <string name="title_activity_myprofile">Meu Perfil</string>
+    <string name="title_activity_comments">Comentários</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (Opcional)</string>
@@ -19,6 +21,7 @@
     <string name="action_logout">Sair</string>
     <string name="action_myprofile">Meu Perfil</string>
     <string name="action_mydevices">Meus dispositivos</string>
+    <string name="action_see_comments">Ver comentários</string>
 
     <string name="error_invalid_email">Este e-mail é inválido</string>
     <string name="error_invalid_password">Esta senha é muito curta</string>

@@ -5,6 +5,8 @@
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_post">Newsletter</string>
+    <string name="title_activity_comments">Comments</string>
+    <string name="title_activity_myprofile">My Profile</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -19,6 +21,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_myprofile">My Profile</string>
     <string name="action_mydevices">My Devices</string>
+    <string name="action_see_comments">See comments</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
