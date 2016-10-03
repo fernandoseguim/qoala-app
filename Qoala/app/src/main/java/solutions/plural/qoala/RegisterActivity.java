@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import solutions.plural.qoala.utils.HttpMethod;
+import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JSONAPI;
 import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.Util;
@@ -105,16 +106,7 @@ public class RegisterActivity extends Activity {
         @Override
         protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
             switch (responseCode) {
-                case 400://Bad Request
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(R.string.title_activity_register)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setMessage(responseMessage)
-                            .create()
-                            .show();
-                    return true;
-
-                case 201:
+                case HttpStatusCode.Created:
                     //todo: receber ok do login e registrar token
                     if (jsonObject.has(JSONAPI.json_token)) {
                         String token = jsonObject.optString(JSONAPI.json_token);

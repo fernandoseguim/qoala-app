@@ -19,7 +19,7 @@ public class JSONAPITest {
 
     @Test
     public void testPostJSON() throws Exception {
-        JSONObject retorno = JSONAPI.Post("", new JSONStringer());
+        JSONObject retorno = JSONAPI.CallURL(HttpMethod.POST, "", new JSONStringer());
         assertTrue(retorno.has("Version"));
     }
 }

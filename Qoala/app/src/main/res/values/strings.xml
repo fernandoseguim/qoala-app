@@ -16,12 +16,13 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_login">Sign in</string>
-    <string name="action_register">I do not have yet, register</string>
+    <string name="action_register">Register me</string>
     <string name="action_registergo">Register and Login</string>
     <string name="action_logout">Logout</string>
     <string name="action_myprofile">My Profile</string>
     <string name="action_mydevices">My Devices</string>
     <string name="action_see_comments">See comments</string>
+    <string name="action_save">Update</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

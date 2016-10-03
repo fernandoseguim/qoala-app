@@ -89,8 +89,10 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
             case HttpMethod.GET:
                 jso = JSONAPI.Get(action);
                 break;
+            case HttpMethod.DELETE:
+            case HttpMethod.PUT:
             case HttpMethod.POST:
-                jso = JSONAPI.Post(action, json);
+                jso = JSONAPI.CallURL(httpMethod, action, json);
                 break;
         }
 
@@ -152,6 +154,8 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
 
     /**
      * <p>Este metodo é Executado depois da chamada de <code>onPostExecute</code>.
+     * <p>Deve retornar <code>true</code> se o retorno foi como experado, <br/>
+     * ou <code>false</code> se deve apresentrar erro.</p>
      * <pre class="prettyprint">
      * protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
      * switch (responseCode) {
@@ -168,7 +172,7 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
      * @param jsonObject
      * @return <p>É importante que o retorno seja <code>true</code>, se foi feito o tratamento do retorno
      * para não apresentar uma mensagem de alerta com a mensagem de retorno. </p><p>Quando
-     * <code>false</code>, nenhuma mensagem será exibida.</p>
+     * <code>false</code>, um alerta irá apresentar a mensagem .</p>
      */
     @NonNull
     protected abstract boolean onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject);

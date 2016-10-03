@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_my_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,16 +14,120 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:keepScreenOn="true"
         android:elevation="4dp"
-        android:title="@string/app_name"
+        android:keepScreenOn="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:title="@string/app_name"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_margin="@dimen/text_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Complete seus dados" />
+
+            <EditText
+                android:id="@+id/edtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="53dp"
+                android:ems="10"
+                android:hint="@string/hint_name"
+                android:inputType="textPersonName"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtUserName"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@+id/imageView5"
+                android:layout_toRightOf="@+id/imageView5"
+                android:ems="10"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtEmail"
+                android:layout_alignStart="@+id/edtEmail"
+                android:layout_below="@+id/edtEmail"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtPassword2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtPassword"
+                android:layout_alignStart="@+id/edtPassword"
+                android:layout_below="@+id/edtPassword"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:theme="@style/AppTheme.EditText" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/edtUserName"
+                android:layout_toLeftOf="@+id/edtUserName"
+                android:layout_toStartOf="@+id/edtUserName"
+                android:labelFor="@id/edtUserName"
+                android:src="@drawable/icon_user" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/edtEmail"
+                android:layout_toLeftOf="@+id/edtEmail"
+                android:layout_toStartOf="@+id/edtEmail"
+                android:labelFor="@id/edtEmail"
+                android:src="@drawable/icon_email" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/edtPassword"
+                android:layout_toLeftOf="@+id/edtPassword"
+                android:layout_toStartOf="@+id/edtPassword"
+                android:labelFor="@id/edtPassword"
+                android:src="@drawable/icon_pass" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                style="@style/AppTheme.Button"
+                android:layout_below="@+id/edtPassword2"
+                android:layout_marginTop="40dp"
+                android:onClick="updateUserClick"
+                android:text="@string/action_save" />
+
+
+        </RelativeLayout>
+
 
         <!-- put all USer sheets in here field by field -->
 

@@ -58,15 +58,15 @@ public class JSONAPI {
         }
     }
 
-    public static JSONObject Post(String specURL, JSONStringer jsonStringer) {
-        Log.i(TAG, "Post: " + specURL + " Body: " + jsonStringer);
+    public static JSONObject CallURL(@HttpMethod String method, String specURL, JSONStringer jsonStringer) {
+        Log.i(TAG, "Calling "+method+": " + specURL + " Body: " + jsonStringer);
         HttpURLConnection connection = null;
         try {
             URL url = null;
             try {
                 url = new URL(urlService + specURL);
                 connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod(method);
 
                 // add Auth Token
                 SessionResources sr = SessionResources.getInstance();
@@ -87,7 +87,7 @@ public class JSONAPI {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(TAG, "Post: " + e.getMessage(), e);
+                Log.e(TAG, method+": " + e.getMessage(), e);
                 JSONObject ret = new JSONObject();
                 try {
                     ret.accumulate("Error", e.getMessage());
