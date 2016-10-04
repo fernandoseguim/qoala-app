@@ -1,6 +1,7 @@
 package solutions.plural.qoala.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import solutions.plural.qoala.Modelos.CommentsDTO;
-import solutions.plural.qoala.Modelos.PostsDTO;
+import solutions.plural.qoala.models.CommentsDTO;
+import solutions.plural.qoala.models.PostsDTO;
 import solutions.plural.qoala.R;
 
 /**
@@ -50,14 +51,15 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
         return post.comments.indexOf(item);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
 
             LayoutInflater inflater = context.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.itemlist_post_comments, null);
+            rowView = inflater.inflate(R.layout.itemlist_post_comments, parent);
 
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
@@ -72,12 +74,13 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
         CommentsDTO comment = getItem(position);
-        holder.comment = comment;
+        if(comment!=null) {
+            holder.comment = comment;
 
-        holder.text_User.setText("[comment.user]");
-        holder.text_DateMsg.setText("[comment.date]");
-        holder.text_Message.setText(comment.content);
-
+            holder.text_User.setText("[comment.user]");
+            holder.text_DateMsg.setText("[comment.date]");
+            holder.text_Message.setText(comment.content);
+        }
         return rowView;
     }
 

@@ -1,4 +1,4 @@
-package solutions.plural.qoala.Modelos;
+package solutions.plural.qoala.models;
 
 import android.support.annotation.IntDef;
 
@@ -8,7 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by gabri on 25/09/2016.
  */
-
 public abstract class UserPermission {
 
     public static final int PERMISSION_PUBLIC = 1;

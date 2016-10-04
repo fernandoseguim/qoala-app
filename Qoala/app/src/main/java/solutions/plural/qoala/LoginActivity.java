@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.Modelos.UserDTO;
+import solutions.plural.qoala.models.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.JSONAPI;
 import solutions.plural.qoala.utils.JsonTask;

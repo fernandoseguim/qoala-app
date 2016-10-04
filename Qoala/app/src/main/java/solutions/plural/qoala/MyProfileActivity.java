@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.Modelos.UserDTO;
+import solutions.plural.qoala.models.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
@@ -67,7 +67,7 @@ public class MyProfileActivity extends AppCompatActivity {
             return;
         }
 
-        JSONStringer jsonUser = null;
+        JSONStringer jsonUser;
         try {
             jsonUser = new JSONStringer()
                     .object()
@@ -107,8 +107,9 @@ public class MyProfileActivity extends AppCompatActivity {
                     edtPassword.setText("");
                     edtPassword2.setText("");
                     return true;
+                default:
+                    return false;
             }
-            return false;
         }
     }
 

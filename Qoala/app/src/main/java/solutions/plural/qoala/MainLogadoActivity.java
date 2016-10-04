@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import solutions.plural.qoala.Modelos.BlogDTO;
-import solutions.plural.qoala.Modelos.UserDTO;
+import solutions.plural.qoala.models.BlogDTO;
+import solutions.plural.qoala.models.UserDTO;
 import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;

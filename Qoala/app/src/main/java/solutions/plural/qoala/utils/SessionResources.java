@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import solutions.plural.qoala.Modelos.UserDTO;
+import solutions.plural.qoala.models.UserDTO;
 
 /**
  * Created by gabri on 28/08/2016.
@@ -50,7 +50,7 @@ public class SessionResources {
      * Busca o token armazenado nas preferencias se não encontrar na sessão.
      *
      * @param ctx <{@link android.app.Activity} do contexto atual, será usado para buscar valor armazenado
-     * @return
+     * @return retorna o Token armazenado
      */
     public String getToken(Context ctx) {
         if (token.isEmpty())
@@ -87,7 +87,7 @@ public class SessionResources {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(JSONAPI.json_token, token);
         // Commit the edits!
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -98,7 +98,7 @@ public class SessionResources {
     private void clear(Context ctx) {
         SharedPreferences settings = ctx.getSharedPreferences(PREFS_TOKEN, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.clear().commit();
+        editor.clear().apply();
     }
 
     public UserDTO getUser() {

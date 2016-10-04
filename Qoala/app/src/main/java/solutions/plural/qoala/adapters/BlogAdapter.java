@@ -1,6 +1,7 @@
 package solutions.plural.qoala.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import solutions.plural.qoala.R;
-import solutions.plural.qoala.Modelos.BlogDTO;
-import solutions.plural.qoala.Modelos.PostsDTO;
+import solutions.plural.qoala.models.BlogDTO;
+import solutions.plural.qoala.models.PostsDTO;
 
 /**
  * Created by gabri on 29/09/2016.
  */
-
 public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
     private final Activity context;
@@ -49,14 +49,15 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
         return blog.posts.indexOf(item);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
 
             LayoutInflater inflater = context.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.itemlist_blog_posts, null);
+            rowView = inflater.inflate(R.layout.itemlist_blog_posts, parent);
 
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
@@ -70,11 +71,11 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
         PostsDTO post = getItem(position);
-        holder.post=post;
-
-        holder.text_Title.setText(post.title);
-        holder.text_Content.setText(post.getContentPartial());
-
+        if(post!=null) {
+            holder.post = post;
+            holder.text_Title.setText(post.title);
+            holder.text_Content.setText(post.getContentPartial());
+        }
         return rowView;
     }
 

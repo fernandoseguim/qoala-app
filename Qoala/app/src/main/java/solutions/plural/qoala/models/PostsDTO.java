@@ -1,4 +1,4 @@
-package solutions.plural.qoala.Modelos;
+package solutions.plural.qoala.models;
 
 import com.google.gson.Gson;
 
@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Created by gabri on 29/09/2016.
  */
-
 public class PostsDTO implements Serializable {
 
     public int id_post;
