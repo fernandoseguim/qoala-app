@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import solutions.plural.qoala.R;
-import solutions.plural.qoala.Models.BlogDTO;
-import solutions.plural.qoala.Models.PostsDTO;
+import solutions.plural.qoala.Modelos.BlogDTO;
+import solutions.plural.qoala.Modelos.PostsDTO;
 
 /**
  * Created by gabri on 29/09/2016.

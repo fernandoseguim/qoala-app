@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
-import solutions.plural.qoala.Models.BlogDTO;
-import solutions.plural.qoala.Models.UserDTO;
+import solutions.plural.qoala.Modelos.BlogDTO;
+import solutions.plural.qoala.Modelos.UserDTO;
 import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
@@ -133,7 +133,6 @@ public class MainLogadoActivity extends AppCompatActivity {
     public String getPaginacao() {
         return paginacao.toString();
     }
-
 
     /**
      * Task para carregar Posts

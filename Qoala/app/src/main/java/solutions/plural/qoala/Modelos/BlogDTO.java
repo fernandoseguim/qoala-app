@@ -1,4 +1,4 @@
-package solutions.plural.qoala.Models;
+package solutions.plural.qoala.Modelos;
 
 import com.google.gson.Gson;
 
@@ -12,10 +12,7 @@ public class BlogDTO {
 
     public List<PostsDTO> posts;
 
-    public int total_number_pages;
-    public boolean next_page;
-    public int current_page;
-    public boolean previous_page;
+    public Pagination pagination;
 
     public static BlogDTO fromJson(String json) { return new Gson().fromJson(json, BlogDTO.class ); }
 

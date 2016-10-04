@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import solutions.plural.qoala.Models.PostsDTO;
+import solutions.plural.qoala.Modelos.PostsDTO;
 import solutions.plural.qoala.adapters.CommentsAdapter;
 
 public class PostDetailActivity extends AppCompatActivity {

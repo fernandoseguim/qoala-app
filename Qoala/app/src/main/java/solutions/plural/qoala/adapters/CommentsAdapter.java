@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
-import solutions.plural.qoala.Models.BlogDTO;
-import solutions.plural.qoala.Models.CommentsDTO;
-import solutions.plural.qoala.Models.PostsDTO;
+import solutions.plural.qoala.Modelos.CommentsDTO;
+import solutions.plural.qoala.Modelos.PostsDTO;
 import solutions.plural.qoala.R;
 
 /**
@@ -68,7 +65,7 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
             viewHolder.text_DateMsg = (TextView) rowView.findViewById(R.id.comment_datamsg);
             viewHolder.text_Message = (TextView) rowView.findViewById(R.id.comment_message);
             rowView.setTag(viewHolder);
-
+            rowView.setClickable(false);
         }
 
         // fill data

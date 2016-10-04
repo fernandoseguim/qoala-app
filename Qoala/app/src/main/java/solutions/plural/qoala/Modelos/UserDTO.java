@@ -1,8 +1,8 @@
-package solutions.plural.qoala.Models;
+package solutions.plural.qoala.Modelos;
 
 import com.google.gson.Gson;
 
-import solutions.plural.qoala.Models.UserPermission.Permission;
+import solutions.plural.qoala.Modelos.UserPermission.Permission;
 
 public class UserDTO {
 

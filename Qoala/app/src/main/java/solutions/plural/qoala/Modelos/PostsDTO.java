@@ -1,4 +1,4 @@
-package solutions.plural.qoala.Models;
+package solutions.plural.qoala.Modelos;
 
 import com.google.gson.Gson;
 

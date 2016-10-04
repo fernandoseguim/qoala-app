@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import solutions.plural.qoala.Models.UserDTO;
+import solutions.plural.qoala.Modelos.UserDTO;
 
 /**
  * Created by gabri on 28/08/2016.

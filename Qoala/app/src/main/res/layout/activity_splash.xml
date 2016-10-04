@@ -24,7 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/logoplural" />
+        android:src="@drawable/logoplural2" />
 
     <ImageView
         android:id="@+id/img_logo_qoala"

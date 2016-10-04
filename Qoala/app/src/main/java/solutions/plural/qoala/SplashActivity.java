@@ -8,7 +8,7 @@ import android.os.Bundle;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import solutions.plural.qoala.Models.UserDTO;
+import solutions.plural.qoala.Modelos.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
