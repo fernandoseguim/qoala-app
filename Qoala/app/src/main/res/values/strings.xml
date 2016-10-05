@@ -33,6 +33,11 @@
     <string name="hint_name">User Name</string>
     <string name="hint_email">User e-mail</string>
     <string name="hint_password">Password</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_district">District</string>
+    <string name="hint_city">City</string>
+    <string name="hint_state">State</string>
+    <string name="hint_zipcode">Zip Code</string>
 
     <string name="txt_toregister">To register you just need to type\n your name, e-mail and password\n into the fields below and go Register</string>
     <string name="progress_title">Processing…</string>

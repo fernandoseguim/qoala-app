@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_my_profile"
@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/holo_primary"
     android:orientation="vertical"
+    android:layout_row="3"
+    android:layout_column="1"
     tools:context="solutions.plural.qoala.MyProfileActivity">
 
     <android.support.v7.widget.Toolbar
@@ -18,12 +20,15 @@
         android:keepScreenOn="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:title="@string/app_name"
+        android:layout_row="0"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_marginBottom="80dp"
+        android:layout_row="1"
+        android:layout_rowWeight="10">
 
         <RelativeLayout
             android:layout_margin="@dimen/text_margin"
@@ -117,19 +122,86 @@
                 android:labelFor="@id/edtPassword"
                 android:src="@drawable/icon_pass" />
 
-            <Button
-                android:id="@+id/btnRegister"
-                style="@style/AppTheme.Button"
-                android:layout_below="@+id/edtPassword2"
-                android:layout_marginTop="40dp"
-                android:onClick="updateUserClick"
-                android:text="@string/action_save" />
 
+            <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtPassword2"
+                android:layout_alignStart="@+id/edtPassword2"
+                android:layout_below="@+id/edtPassword2"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_address"
+                android:inputType="text|textAutoCorrect"
+                android:theme="@style/AppTheme.EditText" />
+
+
+            <EditText
+                android:id="@+id/edtDistrict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtAddress"
+                android:layout_alignStart="@+id/edtAddress"
+                android:layout_below="@+id/edtAddress"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_district"
+                android:inputType="text|textAutoCorrect"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtAddress"
+                android:layout_alignStart="@+id/edtAddress"
+                android:layout_below="@+id/edtAddress"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_city"
+                android:inputType="text|textAutoCorrect"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtAddress"
+                android:layout_alignStart="@+id/edtAddress"
+                android:layout_below="@+id/edtCity"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_state"
+                android:inputType="text|textAutoCorrect"
+                android:theme="@style/AppTheme.EditText" />
+
+            <EditText
+                android:id="@+id/edtZipCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/edtAddress"
+                android:layout_alignStart="@+id/edtAddress"
+                android:layout_below="@+id/edtState"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="@string/hint_zipcode"
+                android:inputType="text|textAutoCorrect"
+                android:theme="@style/AppTheme.EditText" />
 
         </RelativeLayout>
-
 
         <!-- put all USer sheets in here field by field -->
 
     </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/AppTheme.Button"
+        android:layout_below="@+id/edtPassword2"
+        android:layout_marginTop="-80dp"
+        android:onClick="updateUserClick"
+        android:layout_row="3"
+        android:layout_rowWeight="1"
+        android:text="@string/action_save" />
+</GridLayout>

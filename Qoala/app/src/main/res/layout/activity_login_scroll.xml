@@ -46,7 +46,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="340dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/img_logo_qoala"
@@ -56,13 +56,13 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-
             <Button
                 android:id="@+id/btnLogin"
                 style="@style/AppTheme.Button"
                 android:layout_above="@+id/btnRegister"
                 android:layout_marginBottom="20dp"
                 android:onClick="loginClick"
+                android:width="180dp"
                 android:text="@string/action_login" />
 
             <Button
@@ -71,7 +71,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="20dp"
                 android:onClick="registerClick"
+                android:width="180dp"
                 android:text="@string/action_register" />
+
 
             <EditText
                 android:id="@+id/edtPassword"

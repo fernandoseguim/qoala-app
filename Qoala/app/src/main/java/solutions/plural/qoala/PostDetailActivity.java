@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import solutions.plural.qoala.models.PostsDTO;
 import solutions.plural.qoala.adapters.CommentsAdapter;
+import solutions.plural.qoala.models.PostsDTO;
 
 public class PostDetailActivity extends AppCompatActivity {
 

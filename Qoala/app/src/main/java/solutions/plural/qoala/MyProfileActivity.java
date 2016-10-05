@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,12 +26,17 @@ public class MyProfileActivity extends AppCompatActivity {
     UserDTO user = null;
     private GetUserTask getUser;
     private PutUserTask putUser;
-    private String id_user = String.valueOf(SessionResources.getInstance().getUser().id_user);
+    private String id_user = "";
 
     private EditText edtEmail = null;
     private EditText edtPassword = null;
     private EditText edtPassword2 = null;
     private EditText edtUsername = null;
+    private TextView edtAddress = null;
+    private TextView edtDistrict = null;
+    private TextView edtCity = null;
+    private TextView edtState = null;
+    private TextView edtZipcode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,11 @@ public class MyProfileActivity extends AppCompatActivity {
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         edtPassword2 = (EditText) findViewById(R.id.edtPassword2);
         edtUsername = (EditText) findViewById(R.id.edtUserName);
+        edtAddress = (EditText) findViewById(R.id.edtAddress);
+        edtDistrict = (EditText) findViewById(R.id.edtDistrict);
+        edtCity = (EditText) findViewById(R.id.edtCity);
+        edtState = (EditText) findViewById(R.id.edtState);
+        edtZipcode = (EditText) findViewById(R.id.edtZipCode);
 
     }
 
@@ -74,6 +85,11 @@ public class MyProfileActivity extends AppCompatActivity {
                     .key("email").value(edtEmail.getText().toString())
                     .key("name").value(edtUsername.getText().toString())
                     .key("password").value(pass1)
+                    .key("address").value(edtAddress.getText().toString())
+                    .key("district").value(edtDistrict.getText().toString())
+                    .key("city").value(edtCity.getText().toString())
+                    .key("state").value(edtState.getText().toString())
+                    .key("zipcode").value(edtZipcode.getText().toString())
                     .endObject();
 
             putUser.execute(jsonUser);
@@ -103,6 +119,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 case HttpStatusCode.OK:
                     user = UserDTO.fromJson(jsonObject.toString());
                     SessionResources.getInstance().setUser(user);
+                    id_user = String.valueOf(SessionResources.getInstance().getUser().id_user);
                     edtUsername.setText(user.name);
                     edtEmail.setText(user.email);
                     edtPassword.setText("");
@@ -126,7 +143,6 @@ public class MyProfileActivity extends AppCompatActivity {
         @NonNull
         @Override
         protected boolean onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject) {
-
             switch (responseCode) {
                 case HttpStatusCode.NoContent:
                     Snackbar.make(edtUsername, "Atualizado!", Snackbar.LENGTH_LONG).show();

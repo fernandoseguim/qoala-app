@@ -29,8 +29,8 @@ public class SessionResources {
         if (getANewOne) ourInstance = new SessionResources();
         String msg = "getInstance() -> " + ourInstance;
         if (ourInstance != null)
-            msg += ": " + ourInstance.toString() + ". tkn: "+ ourInstance.token;
-        Log.i("SessionResources", msg);
+            msg += ": " + ourInstance.toString() + ". tkn: " + ourInstance.token;
+        Log.d("SessionResources", msg);
         return ourInstance;
     }
 
@@ -107,6 +107,7 @@ public class SessionResources {
     }
 
     public UserDTO getUser() {
+        Log.d("SessionResources", "User: " + user);
         return user;
     }
 

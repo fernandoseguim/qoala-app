@@ -33,6 +33,11 @@
     <string name="hint_name">Nome do usuário</string>
     <string name="hint_email">E-mail do usuário</string>
     <string name="hint_password">Senha</string>
+    <string name="hint_address">Endereço</string>
+    <string name="hint_district">Bairo</string>
+    <string name="hint_city">Cidade</string>
+    <string name="hint_state">Estado</string>
+    <string name="hint_zipcode">CEP</string>
 
     <string name="txt_toregister">Para registrar-se, você só precisa\n digitar seu nome, e-mail e senha \nnos campos abaixo e registrar</string>
 

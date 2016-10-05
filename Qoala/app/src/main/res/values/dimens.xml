@@ -5,6 +5,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="posttitle_size">21dp</dimen>
+    <dimen name="postdate_size">12dp</dimen>
+
     <dimen name="edittext_size">20dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 

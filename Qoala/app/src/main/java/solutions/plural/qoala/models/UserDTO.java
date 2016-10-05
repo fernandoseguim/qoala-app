@@ -12,6 +12,12 @@ public class UserDTO {
     @Permission
     public int permission;
 
+    public String address;
+    public String district;
+    public String city;
+    public String state;
+    public String zipcode;
+
     public static UserDTO fromJson(String json) {
         return new Gson().fromJson(json, UserDTO.class);
     }
