@@ -1,5 +1,6 @@
 package solutions.plural.qoala.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class SessionResources {
         if (getANewOne) ourInstance = new SessionResources();
         String msg = "getInstance() -> " + ourInstance;
         if (ourInstance != null)
-            msg += ": " + ourInstance.toString();
+            msg += ": " + ourInstance.toString() + ". tkn: "+ ourInstance.token;
         Log.i("SessionResources", msg);
         return ourInstance;
     }
@@ -52,7 +53,7 @@ public class SessionResources {
      * @param ctx <{@link android.app.Activity} do contexto atual, será usado para buscar valor armazenado
      * @return retorna o Token armazenado
      */
-    public String getToken(Context ctx) {
+    public String getToken(Activity ctx) {
         if (token.isEmpty())
             if (ctx != null)
                 loadToken(ctx);
@@ -69,9 +70,13 @@ public class SessionResources {
      *
      * @param ctx Activity do contexto
      */
-    private void loadToken(Context ctx) {
+    private void loadToken(Activity ctx) {
         // Restore Token ID from sharedPreferences
+
+        ctx.getPreferences(Context.MODE_PRIVATE);
+
         SharedPreferences settings = ctx.getSharedPreferences(PREFS_TOKEN, 0);
+
         token = settings.getString(JSONAPI.json_token, "");
     }
 

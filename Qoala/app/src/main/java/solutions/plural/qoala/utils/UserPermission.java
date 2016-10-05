@@ -1,4 +1,4 @@
-package solutions.plural.qoala.models;
+package solutions.plural.qoala.utils;
 
 import android.support.annotation.IntDef;
 

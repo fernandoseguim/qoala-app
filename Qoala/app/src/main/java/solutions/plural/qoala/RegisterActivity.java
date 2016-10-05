@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -61,19 +62,19 @@ public class RegisterActivity extends Activity {
     public void registerClick(View v) {
 
         if (edtUsername.getText().length() == 0) {
-            Toast.makeText(getContext(), R.string.error_field_required, Toast.LENGTH_SHORT).show();
+            Snackbar.make(edtUsername, R.string.error_field_required, Snackbar.LENGTH_LONG).show();
             if (edtUsername.isFocusable() && !edtUsername.isFocused())
                 edtUsername.requestFocus();
             return;
         }
         if (!Util.isValidEmail(edtEmail.getText().toString())) {
-            Toast.makeText(getContext(), R.string.error_invalid_email, Toast.LENGTH_LONG).show();
+            Snackbar.make(edtEmail, R.string.error_invalid_email, Snackbar.LENGTH_LONG).show();
             if (edtEmail.isFocusable())
                 edtEmail.requestFocus();
             return;
         }
         if (edtPassword.getText().length() == 0) {
-            Toast.makeText(getContext(), R.string.error_field_required, Toast.LENGTH_SHORT).show();
+            Snackbar.make(edtPassword, R.string.error_field_required, Snackbar.LENGTH_LONG).show();
             if (edtPassword.isFocusable())
                 edtPassword.requestFocus();
             return;

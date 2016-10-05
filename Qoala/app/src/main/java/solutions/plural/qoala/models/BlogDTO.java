@@ -11,7 +11,7 @@ public class BlogDTO {
 
     public List<PostsDTO> posts;
 
-    public Pagination pagination;
+    //public PaginationDTO pagination;
 
     public static BlogDTO fromJson(String json) { return new Gson().fromJson(json, BlogDTO.class ); }
 

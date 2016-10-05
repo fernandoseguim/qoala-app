@@ -57,7 +57,7 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
         if (rowView == null) {
 
             LayoutInflater inflater = context.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.itemlist_blog_posts, parent);
+            rowView = inflater.inflate(R.layout.itemlist_blog_posts, null);
 
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();

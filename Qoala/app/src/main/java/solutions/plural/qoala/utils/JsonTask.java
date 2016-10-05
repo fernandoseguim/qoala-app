@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import junit.framework.Assert;
@@ -82,7 +83,7 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     @Override
     protected JSONObject doInBackground(JSONStringer... params) {
         JSONStringer json = null;
-        if (params.length >= 1)
+        if (params != null && params.length >= 1)
             json = params[0];
         JSONObject jso = null;
         switch (httpMethod) {
@@ -104,7 +105,8 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     protected void onPostExecute(JSONObject jsonObject) {
         if (!_silent)
             progressDialog.dismiss();
-        Log.d(TAG, "retorno da validação: " + jsonObject);
+
+        Log.d(TAG, "retorno da validação ["+jsonObject.toString().length()/1024+"k]: " + jsonObject.toString());
         try {
             if (jsonObject == null || jsonObject.has("Error")) {
                 Log.e(TAG, "ERRO: " + jsonObject.getString("Error"));
@@ -119,11 +121,14 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                 if (jsonObject.has(JSONAPI.json_responseCode)) {
                     @HttpStatusCode int code = jsonObject.optInt(JSONAPI.json_responseCode);
                     String message = jsonObject.optString(JSONAPI.json_message);
+                    if(message.isEmpty())
+                        message = jsonObject.optString(JSONAPI.json_responseMessage);
                     jsonObject.remove(JSONAPI.json_responseCode);
                     jsonObject.remove(JSONAPI.json_responseMessage);
                     if (code == HttpStatusCode.Unauthorized) {
                         Log.i(TAG, code + ": " + message);
                         if (context instanceof Activity) {
+                            Snackbar.make(((Activity) context).getCurrentFocus(), R.string.error_connection_failure, Snackbar.LENGTH_LONG).show();
                             ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
                             ((Activity) context).finish();
                         }
@@ -132,17 +137,13 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                         boolean postExecutedok = onPostExecuted(code, message, jsonObject);
 
                         if (!postExecutedok) {
-                            switch (code) {
-                                case HttpStatusCode.BadRequest://Bad Request
-                                    Log.e(TAG, String.format("Code: {0}; Message: {1}.", code, message));
-                                    new AlertDialog.Builder(context)
-                                            .setTitle(R.string.app_name)
-                                            .setPositiveButton(android.R.string.ok, null)
-                                            .setMessage(message)
-                                            .create()
-                                            .show();
-                                    break;
-                            }
+                            Log.e(TAG, String.format("Code: {0}; Message: {1}.", code, message));
+                            new AlertDialog.Builder(context)
+                                    .setTitle(R.string.app_name)
+                                    .setPositiveButton(android.R.string.ok, null)
+                                    .setMessage(message)
+                                    .create()
+                                    .show();
                         }
                     }
                 }

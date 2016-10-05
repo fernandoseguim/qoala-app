@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +16,7 @@ import org.json.JSONStringer;
 
 import solutions.plural.qoala.models.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
+import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JSONAPI;
 import solutions.plural.qoala.utils.JsonTask;
 import solutions.plural.qoala.utils.SessionResources;
@@ -48,13 +49,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void login() {
 
         if (!Util.isValidEmail(edtEmail.getText().toString())) {
-            Toast.makeText(getContext(), R.string.error_invalid_email, Toast.LENGTH_LONG).show();
+
+            Snackbar.make(edtEmail, R.string.error_invalid_email, Snackbar.LENGTH_LONG).show();
             if (edtEmail.isFocusable())
                 edtEmail.requestFocus();
             return;
         }
         if (edtPassword.getText().length() == 0) {
-            Toast.makeText(getContext(), R.string.error_field_required, Toast.LENGTH_SHORT).show();
+            Snackbar.make(edtPassword, R.string.error_field_required, Snackbar.LENGTH_LONG).show();
             if (edtPassword.isFocusable())
                 edtPassword.requestFocus();
             return;
@@ -78,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         startRegisterActivity();
     }
 
-    private void startDeviceListActivity() {
+    private void startMainLogadoActivity() {
         Intent intent = new Intent(getContext(), MainLogadoActivity.class);
         startActivity(intent);
         finish();
@@ -100,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (b.containsKey(JSONAPI.json_token)) {
                     String token = b.getString(JSONAPI.json_token);
                     SessionResources.getInstance().setToken(token, getContext());
-                    startDeviceListActivity();
+                    startMainLogadoActivity();
                 }
             }
         }
@@ -137,15 +139,15 @@ public class LoginActivity extends AppCompatActivity {
                             .show();
                     return true;
 
-                case 200://OK
-                case 201://Created
+                case HttpStatusCode.OK:
+                case HttpStatusCode.Created:
                     //todo: receber ok do login e registrar token
                     if (jsonObject.has(JSONAPI.json_token)) {
                         String token = jsonObject.optString(JSONAPI.json_token);
                         SessionResources sr = SessionResources.getInstance(true);
                         sr.setToken(token, getContext());
                         sr.setUser(UserDTO.fromJson(jsonObject.toString()));
-                        startDeviceListActivity();
+                        startMainLogadoActivity();
                     }
                     return true;
             }

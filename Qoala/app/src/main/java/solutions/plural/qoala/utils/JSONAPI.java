@@ -24,6 +24,7 @@ public class JSONAPI {
     public static final String json_message = "Message";
     public static final String json_token = "token";
     public static final String json_user = "user";
+
     private static final String TAG = "JSONAPI";
     private static final String urlService = "http://ws.qoala.com.br/";
 
@@ -59,7 +60,7 @@ public class JSONAPI {
     }
 
     public static JSONObject CallURL(@HttpMethod String method, String specURL, JSONStringer jsonStringer) {
-        Log.i(TAG, "Calling "+method+": " + specURL + " Body: " + jsonStringer);
+        Log.i(TAG, "Calling " + method + ": " + specURL + " Body: " + jsonStringer);
         HttpURLConnection connection = null;
         try {
             URL url = null;
@@ -87,7 +88,7 @@ public class JSONAPI {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(TAG, method+": " + e.getMessage(), e);
+                Log.e(TAG, method + ": " + e.getMessage(), e);
                 JSONObject ret = new JSONObject();
                 try {
                     ret.accumulate("Error", e.getMessage());

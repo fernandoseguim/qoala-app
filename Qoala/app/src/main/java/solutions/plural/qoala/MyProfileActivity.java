@@ -38,7 +38,7 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle(R.string.title_activity_post);
+        myToolbar.setTitle(R.string.title_activity_myprofile);
         setSupportActionBar(myToolbar);
 
         ActionBar bar = getSupportActionBar();
@@ -90,8 +90,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
         @Override
         protected void setConfig() {
+            setSilent(true);
             this.context = getContext();
-            this.action = "users/" + id_user;
+            this.action = "accounts/me";
             this.httpMethod = HttpMethod.GET;
         }
 
@@ -130,7 +131,6 @@ public class MyProfileActivity extends AppCompatActivity {
                 case HttpStatusCode.NoContent:
                     Snackbar.make(edtUsername, "Atualizado!", Snackbar.LENGTH_LONG).show();
                     getUser.execute();
-
                     return true;
             }
             return false;
