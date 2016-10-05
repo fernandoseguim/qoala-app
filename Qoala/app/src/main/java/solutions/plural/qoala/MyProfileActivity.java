@@ -82,14 +82,14 @@ public class MyProfileActivity extends AppCompatActivity {
         try {
             jsonUser = new JSONStringer()
                     .object()
-                    .key("email").value(edtEmail.getText().toString())
-                    .key("name").value(edtUsername.getText().toString())
+                    .key("email").value(edtEmail.getText().toString().trim())
+                    .key("name").value(edtUsername.getText().toString().trim())
                     .key("password").value(pass1)
-                    .key("address").value(edtAddress.getText().toString())
-                    .key("district").value(edtDistrict.getText().toString())
-                    .key("city").value(edtCity.getText().toString())
-                    .key("state").value(edtState.getText().toString())
-                    .key("zipcode").value(edtZipcode.getText().toString())
+                    .key("address").value(edtAddress.getText().toString().trim())
+                    .key("district").value(edtDistrict.getText().toString().trim())
+                    .key("city").value(edtCity.getText().toString().trim())
+                    .key("state").value(edtState.getText().toString().trim())
+                    .key("zipcode").value(edtZipcode.getText().toString().trim())
                     .endObject();
 
             putUser.execute(jsonUser);
@@ -124,6 +124,11 @@ public class MyProfileActivity extends AppCompatActivity {
                     edtEmail.setText(user.email);
                     edtPassword.setText("");
                     edtPassword2.setText("");
+                    edtAddress.setText(user.address);
+                    edtDistrict.setText(user.district);
+                    edtCity.setText(user.city);
+                    edtState.setText(user.state);
+                    edtZipcode.setText(user.zipcode);
                     return true;
                 default:
                     return false;
