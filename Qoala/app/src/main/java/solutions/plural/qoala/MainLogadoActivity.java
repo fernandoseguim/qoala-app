@@ -44,7 +44,7 @@ public class MainLogadoActivity extends AppCompatActivity {
 
         lista = (ListView) findViewById(R.id.lista);
 
-        lista.setVerticalScrollBarEnabled(true);
+        //lista.setVerticalScrollBarEnabled(true);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,10 +52,12 @@ public class MainLogadoActivity extends AppCompatActivity {
                 BlogAdapter.ViewHolder holder = (BlogAdapter.ViewHolder) view.getTag();
                 // TODO: criar uma activity para abrir o conteudo do comment e os commentarios
                 Intent intent = new Intent(getContext(), PostDetailActivity.class);
+                parent.getId();
                 intent.putExtra("comment", holder.post.toJson());
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

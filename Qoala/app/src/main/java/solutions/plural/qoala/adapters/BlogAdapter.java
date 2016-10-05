@@ -45,6 +45,11 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
         return blog.posts.indexOf(item);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).id_post;
+    }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -83,9 +88,9 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
     }
 
     public static class ViewHolder {
-        public TextView text_title;
-        public TextView text_date;
-        public TextView text_content;
+        TextView text_title;
+        TextView text_date;
+        TextView text_content;
         public PostsDTO post;
     }
 

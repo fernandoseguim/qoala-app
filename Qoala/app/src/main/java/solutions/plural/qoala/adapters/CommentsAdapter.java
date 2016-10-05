@@ -78,11 +78,11 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
         return rowView;
     }
 
-    public static class ViewHolder {
-        public CommentsDTO comment;
-        public TextView text_User;
-        public TextView text_Date;
-        public TextView text_Message;
+    private static class ViewHolder {
+        CommentsDTO comment;
+        TextView text_User;
+        TextView text_Date;
+        TextView text_Message;
     }
 
 }
