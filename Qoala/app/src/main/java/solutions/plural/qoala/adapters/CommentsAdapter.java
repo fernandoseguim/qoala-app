@@ -22,13 +22,6 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
     private final Activity context;
     private final PostsDTO post;
 
-    public static class ViewHolder {
-        public CommentsDTO comment;
-        public TextView text_User;
-        public TextView text_DateMsg;
-        public TextView text_Message;
-    }
-
     public CommentsAdapter(Activity context, PostsDTO post) {
         super(context, R.layout.itemlist_post_comments, post.comments);
         this.context = context;
@@ -64,7 +57,7 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.text_User = (TextView) rowView.findViewById(R.id.comment_user);
-            viewHolder.text_DateMsg = (TextView) rowView.findViewById(R.id.comment_datamsg);
+            viewHolder.text_Date = (TextView) rowView.findViewById(R.id.comment_date);
             viewHolder.text_Message = (TextView) rowView.findViewById(R.id.comment_message);
             rowView.setTag(viewHolder);
             rowView.setClickable(false);
@@ -78,11 +71,18 @@ public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
             holder.comment = comment;
 
             holder.text_User.setText(comment.user_name);
-            holder.text_DateMsg.setText(comment.getCreatedAt());
+            holder.text_Date.setText(comment.getCreatedAt());
             holder.text_Message.setText(comment.content);
 
         }
         return rowView;
+    }
+
+    public static class ViewHolder {
+        public CommentsDTO comment;
+        public TextView text_User;
+        public TextView text_Date;
+        public TextView text_Message;
     }
 
 }

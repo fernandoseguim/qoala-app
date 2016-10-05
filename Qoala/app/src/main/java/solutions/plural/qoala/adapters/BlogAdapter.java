@@ -1,8 +1,10 @@
 package solutions.plural.qoala.adapters;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +22,6 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
     private final Activity context;
     private final BlogDTO blog;
-
-    public static class ViewHolder {
-        public TextView text_Title;
-        public TextView text_Content;
-        public PostsDTO post;
-    }
 
     public BlogAdapter(Activity context, BlogDTO blog) {
         super(context, R.layout.itemlist_blog_posts, blog.posts);
@@ -61,8 +57,9 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.text_Title = (TextView) rowView.findViewById(R.id.post_title);
-            viewHolder.text_Content = (TextView) rowView.findViewById(R.id.post_content);
+            viewHolder.text_title = (TextView) rowView.findViewById(R.id.post_title);
+            viewHolder.text_date = (TextView) rowView.findViewById(R.id.post_date);
+            viewHolder.text_content = (TextView) rowView.findViewById(R.id.post_content);
             rowView.setTag(viewHolder);
 
         }
@@ -71,12 +68,25 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
         PostsDTO post = getItem(position);
-        if(post!=null) {
+        if (post != null) {
             holder.post = post;
-            holder.text_Title.setText(post.title);
-            holder.text_Content.setText(post.getContentPartial());
+            holder.text_title.setText(post.title);
+            holder.text_date.setText(post.getPublishedAt());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.text_content.setText(Html.fromHtml(post.content, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                holder.text_content.setText(Html.fromHtml(post.content));
+            }
         }
         return rowView;
+    }
+
+    public static class ViewHolder {
+        public TextView text_title;
+        public TextView text_date;
+        public TextView text_content;
+        public PostsDTO post;
     }
 
 }
