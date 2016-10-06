@@ -68,11 +68,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     public void seeCommentsClick(View view) {
         commentsDialog.show();
     }

@@ -80,11 +80,6 @@ public class MainLogadoActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
