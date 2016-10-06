@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import junit.framework.Assert;
 
@@ -55,21 +55,20 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
     protected ProgressDialog progressDialog;
     protected Context context = null;
     protected String action = "";
-    private boolean _silent = false;
-
     protected
     @HttpMethod
     String httpMethod;
-
-    public JsonTask setSilent(boolean silent) {
-        this._silent = silent;
-        return this;
-    }
+    private boolean _silent = false;
 
     public JsonTask() {
         super();
         setConfig();
-        TAG = getClass().getName() + "/" + action + ":";
+        TAG = getClass().getName() + "::/" + action + ":";
+    }
+
+    public JsonTask setSilent(boolean silent) {
+        this._silent = silent;
+        return this;
     }
 
     @Override
@@ -128,8 +127,8 @@ public abstract class JsonTask extends AsyncTask<JSONStringer, Integer, JSONObje
                     if (code == HttpStatusCode.Unauthorized) {
                         Log.i(TAG, code + ": " + message);
                         if (context instanceof Activity) {
-                            Snackbar.make(((Activity) context).getCurrentFocus(), R.string.error_connection_failure, Snackbar.LENGTH_LONG).show();
-                            ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
+                            Toast.makeText(context, context.getResources().getText(R.string.error_unauthorized) + "\n" + message, Toast.LENGTH_LONG).show();
+                            context.startActivity(new Intent(context, LoginActivity.class));
                             ((Activity) context).finish();
                         }
                     } else {

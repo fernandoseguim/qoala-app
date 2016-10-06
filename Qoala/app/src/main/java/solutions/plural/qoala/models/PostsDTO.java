@@ -15,17 +15,17 @@ public class PostsDTO implements Serializable {
     public String content;
     public String published_at;
     public String id_user;
+    public List<CommentsDTO> comments;
 
-    public String getContentPartial() {
-        if (content.length() > 25)
-            return content.substring(0, 25).concat("(...)");
-        else
-            return content;
+    public static PostsDTO fromJson(String json) {
+        return new Gson().fromJson(json, PostsDTO.class);
     }
 
     public String getPublishedAt() {
         // 0123456789012345
         // YYYY-MM-DDTHH:MM
+        if (published_at.isEmpty())
+            return "-";
         return String.format(published_at.substring(8, 10)
                 + "/" +
                 published_at.substring(5, 7)
@@ -33,12 +33,6 @@ public class PostsDTO implements Serializable {
                 published_at.substring(0, 4)
                 + " " +
                 published_at.substring(11, 16));
-    }
-
-    public List<CommentsDTO> comments;
-
-    public static PostsDTO fromJson(String json) {
-        return new Gson().fromJson(json, PostsDTO.class);
     }
 
     public String toJson() {

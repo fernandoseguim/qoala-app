@@ -22,6 +22,7 @@
     <string name="action_myprofile">My Profile</string>
     <string name="action_mydevices">My Devices</string>
     <string name="action_see_comments">See comments</string>
+    <string name="action_see_more">See more</string>
     <string name="action_save">Update</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
@@ -29,6 +30,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_connection_failure">Register failure, check your internet connection and try again.</string>
+    <string name="error_unauthorized">Unauthorized access try another time.</string>
 
     <string name="hint_name">User Name</string>
     <string name="hint_email">User e-mail</string>

@@ -22,6 +22,7 @@
     <string name="action_myprofile">Meu Perfil</string>
     <string name="action_mydevices">Meus dispositivos</string>
     <string name="action_see_comments">Ver comentários</string>
+    <string name="action_see_more">Ver mais</string>
     <string name="action_save">Atualizar</string>
 
     <string name="error_invalid_email">Este e-mail é inválido</string>
@@ -29,6 +30,7 @@
     <string name="error_incorrect_password">Senha incorreta</string>
     <string name="error_field_required">Este campo é obrigatório</string>
     <string name="error_connection_failure">Falhou ao registrar, Verifique sua conexão com a internet e tente novamente.</string>
+    <string name="error_unauthorized">Acesso não autorizado, tente outra hora.</string>
 
     <string name="hint_name">Nome do usuário</string>
     <string name="hint_email">E-mail do usuário</string>

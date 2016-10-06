@@ -1,23 +1,26 @@
 package solutions.plural.qoala;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.models.BlogDTO;
 import solutions.plural.qoala.models.UserDTO;
-import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
@@ -25,15 +28,14 @@ import solutions.plural.qoala.utils.SessionResources;
 
 public class MainLogadoActivity extends AppCompatActivity {
 
-    private Integer paginacao = 1;
-    private ListView lista = null;
+    private ListView lista;
     private BlogDTO blog;
+    private BlogAdapter blogAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_logado);
-        new PostsTask().setSilent(true).execute();
 
         TextView txtUser = (TextView) findViewById(R.id.txtUser);
         UserDTO user = SessionResources.getInstance().getUser();
@@ -43,8 +45,6 @@ public class MainLogadoActivity extends AppCompatActivity {
         setupMenuBar();
 
         lista = (ListView) findViewById(R.id.lista);
-
-        //lista.setVerticalScrollBarEnabled(true);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,13 +58,31 @@ public class MainLogadoActivity extends AppCompatActivity {
             }
         });
 
+        setFooterList(lista);
+
+        new PostsTask().execute();
+
+    }
+
+    private void setFooterList(final ListView lista) {
+        View footerView = getLayoutInflater().inflate(R.layout.itemlist_blog_posts_footer, null, false);
+
+        lista.addFooterView(footerView);
+
+        Button more = (Button) footerView.findViewById(R.id.action_more);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("LISTA", "Buscando mais dados...");
+                blog.pagination.current_page++;
+                new PostsTask().execute();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (blog == null)
-            new PostsTask().setSilent(true).execute();
     }
 
     /**
@@ -133,7 +151,10 @@ public class MainLogadoActivity extends AppCompatActivity {
     }
 
     public String getPaginacao() {
-        return paginacao.toString();
+        if (blog == null)
+            return String.valueOf(1);
+        else
+            return String.valueOf(blog.pagination.current_page);
     }
 
     /**
@@ -152,17 +173,18 @@ public class MainLogadoActivity extends AppCompatActivity {
         protected boolean onPostExecuted(int responseCode, String responseMessage, JSONObject jsonObject) {
             switch (responseCode) {
                 case HttpStatusCode.OK:
-                    blog = BlogDTO.fromJson(jsonObject.toString());
-                    reloadPosts();
+                    BlogDTO novoblog = BlogDTO.fromJson(jsonObject.toString());
+                    if (blogAdapter == null) {
+                        blog = novoblog;
+                        blogAdapter = new BlogAdapter((Activity) getContext(), blog);
+                        lista.setAdapter(blogAdapter);
+                    } else {
+                        blogAdapter.addAll(novoblog.posts);
+                    }
+
                     return true;
             }
             return false;
         }
     }
-
-    private void reloadPosts() {
-        BlogAdapter adapter = new BlogAdapter(this, blog);
-        lista.setAdapter(adapter);
-    }
-
 }

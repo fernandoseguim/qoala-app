@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                         String token = jsonObject.optString(JSONAPI.json_token);
                         SessionResources sr = SessionResources.getInstance(true);
                         sr.setToken(token, getContext());
-                        sr.setUser(UserDTO.fromJson(jsonObject.toString()));
+                        sr.setUser(UserDTO.fromJson(jsonObject.optJSONObject("user").toString()));
                         startMainLogadoActivity();
                     }
                     return true;

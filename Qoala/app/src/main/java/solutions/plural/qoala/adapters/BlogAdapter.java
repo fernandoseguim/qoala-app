@@ -3,7 +3,6 @@ package solutions.plural.qoala.adapters;
 import android.app.Activity;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,22 +29,6 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
     }
 
     @Override
-    public int getCount() {
-        return blog.posts.size();
-    }
-
-    @Nullable
-    @Override
-    public PostsDTO getItem(int position) {
-        return blog.posts.get(position);
-    }
-
-    @Override
-    public int getPosition(PostsDTO item) {
-        return blog.posts.indexOf(item);
-    }
-
-    @Override
     public long getItemId(int position) {
         return getItem(position).id_post;
     }
@@ -69,6 +52,7 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
         }
 
+
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
@@ -88,10 +72,10 @@ public class BlogAdapter extends ArrayAdapter<PostsDTO> {
     }
 
     public static class ViewHolder {
+        public PostsDTO post;
         TextView text_title;
         TextView text_date;
         TextView text_content;
-        public PostsDTO post;
     }
 
 }
