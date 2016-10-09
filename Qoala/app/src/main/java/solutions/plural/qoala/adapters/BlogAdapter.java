@@ -20,7 +20,14 @@ import solutions.plural.qoala.models.PostsDTO;
 public class BlogAdapter extends ArrayAdapter<PostsDTO> {
 
     private final Activity context;
-    private final BlogDTO blog;
+    private BlogDTO blog;
+
+    public void setBlog(@NonNull BlogDTO blog) {
+        this.clear();
+        this.blog.pagination=blog.pagination;
+        this.addAll(blog.posts);
+        //notifyDataSetChanged();
+    }
 
     public BlogAdapter(Activity context, BlogDTO blog) {
         super(context, R.layout.itemlist_blog_posts, blog.posts);

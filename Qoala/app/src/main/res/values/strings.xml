@@ -23,6 +23,7 @@
     <string name="action_mydevices">My Devices</string>
     <string name="action_see_comments">See comments</string>
     <string name="action_see_more">See more</string>
+    <string name="action_see_less">See less</string>
     <string name="action_save">Update</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
@@ -42,6 +43,8 @@
     <string name="hint_zipcode">Zip Code</string>
 
     <string name="txt_toregister">To register you just need to type\n your name, e-mail and password\n into the fields below and go Register</string>
+    <string name="txt_my_profile">Complete your data, it is importante\n for us to know about you…</string>
+
     <string name="progress_title">Processing…</string>
     <string name="progress_waiting">Working your request…</string>
     <string name="progress_registering">Registrando usuário</string>

@@ -14,13 +14,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONObject;
 
 import solutions.plural.qoala.adapters.BlogAdapter;
 import solutions.plural.qoala.models.BlogDTO;
-import solutions.plural.qoala.models.UserDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
@@ -31,16 +29,13 @@ public class MainLogadoActivity extends AppCompatActivity {
     private ListView lista;
     private BlogDTO blog;
     private BlogAdapter blogAdapter;
+    private Button moreBtn;
+    private Button lessBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_logado);
-
-        TextView txtUser = (TextView) findViewById(R.id.txtUser);
-        UserDTO user = SessionResources.getInstance().getUser();
-        if (user != null)
-            txtUser.setText(user.toJson());
 
         setupMenuBar();
 
@@ -53,15 +48,18 @@ public class MainLogadoActivity extends AppCompatActivity {
                 // TODO: criar uma activity para abrir o conteudo do comment e os commentarios
                 Intent intent = new Intent(getContext(), PostDetailActivity.class);
                 parent.getId();
-                intent.putExtra("comment", holder.post.toJson());
+                intent.putExtra("post", holder.post.toJson());
                 startActivity(intent);
             }
         });
 
         setFooterList(lista);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         new PostsTask().execute();
-
     }
 
     private void setFooterList(final ListView lista) {
@@ -69,12 +67,21 @@ public class MainLogadoActivity extends AppCompatActivity {
 
         lista.addFooterView(footerView);
 
-        Button more = (Button) footerView.findViewById(R.id.action_more);
-        more.setOnClickListener(new View.OnClickListener() {
+        moreBtn = (Button) footerView.findViewById(R.id.action_more);
+        moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("LISTA", "Buscando mais dados...");
+                Log.i("LISTA", "Buscando próxima página...");
                 blog.pagination.current_page++;
+                new PostsTask().execute();
+            }
+        });
+        lessBtn = (Button) footerView.findViewById(R.id.action_less);
+        lessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("LISTA", "Buscando pagina anterior...");
+                blog.pagination.current_page--;
                 new PostsTask().execute();
             }
         });
@@ -123,6 +130,7 @@ public class MainLogadoActivity extends AppCompatActivity {
 
             case R.id.action_myprofile:
                 i = new Intent(this, MyProfileActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 return true;
 
@@ -174,8 +182,13 @@ public class MainLogadoActivity extends AppCompatActivity {
                         blogAdapter = new BlogAdapter((Activity) getContext(), blog);
                         lista.setAdapter(blogAdapter);
                     } else {
-                        blogAdapter.addAll(novoblog.posts);
+                        blogAdapter.setBlog(novoblog);
+                        //blogAdapter.addAll(novoblog.posts);
                     }
+
+                    moreBtn.setVisibility((novoblog.pagination.total_number_pages <= novoblog.pagination.current_page) ? View.INVISIBLE : View.VISIBLE);
+
+                    lessBtn.setVisibility((novoblog.pagination.current_page == 1) ? View.INVISIBLE : View.VISIBLE);
 
                     return true;
             }

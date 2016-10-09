@@ -1,10 +1,12 @@
 package solutions.plural.qoala;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,9 +26,6 @@ import solutions.plural.qoala.utils.SessionResources;
 public class MyProfileActivity extends AppCompatActivity {
 
     UserDTO user = null;
-    private GetUserTask getUser;
-    private PutUserTask putUser;
-    private String id_user = "";
 
     private EditText edtEmail = null;
     private EditText edtPassword = null;
@@ -50,11 +49,7 @@ public class MyProfileActivity extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
 
-        getUser = new GetUserTask();
-        getUser.execute();
-
-        putUser = new PutUserTask();
-
+        new GetUserTask().execute();
 
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
@@ -92,7 +87,8 @@ public class MyProfileActivity extends AppCompatActivity {
                     .key("zipcode").value(edtZipcode.getText().toString().trim())
                     .endObject();
 
-            putUser.execute(jsonUser);
+            new PutUserTask().execute(jsonUser);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -100,6 +96,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public Context getContext() {
         return this;
+    }
+
+    public String getUserId() {
+        return String.valueOf(SessionResources.getInstance().getUser().id_user);
     }
 
     private class GetUserTask extends JsonTask {
@@ -119,7 +119,6 @@ public class MyProfileActivity extends AppCompatActivity {
                 case HttpStatusCode.OK:
                     user = UserDTO.fromJson(jsonObject.toString());
                     SessionResources.getInstance().setUser(user);
-                    id_user = String.valueOf(SessionResources.getInstance().getUser().id_user);
                     edtUsername.setText(user.name);
                     edtEmail.setText(user.email);
                     edtPassword.setText("");
@@ -141,7 +140,7 @@ public class MyProfileActivity extends AppCompatActivity {
         @Override
         protected void setConfig() {
             this.context = getContext();
-            this.action = "users/" + id_user;
+            this.action = "users/" + getUserId();
             this.httpMethod = HttpMethod.PUT;
         }
 
@@ -150,8 +149,17 @@ public class MyProfileActivity extends AppCompatActivity {
         protected boolean onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject) {
             switch (responseCode) {
                 case HttpStatusCode.NoContent:
-                    Snackbar.make(edtUsername, "Atualizado!", Snackbar.LENGTH_LONG).show();
-                    getUser.execute();
+
+                    new GetUserTask().execute();
+
+                    new AlertDialog.Builder(getContext()).setMessage("Atualizado")
+                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+
                     return true;
             }
             return false;

@@ -23,6 +23,7 @@
     <string name="action_mydevices">Meus dispositivos</string>
     <string name="action_see_comments">Ver comentários</string>
     <string name="action_see_more">Ver mais</string>
+    <string name="action_see_less">Ver menos</string>
     <string name="action_save">Atualizar</string>
 
     <string name="error_invalid_email">Este e-mail é inválido</string>
@@ -46,5 +47,6 @@
     <string name="progress_title">Processando…</string>
     <string name="progress_waiting">Processando sua requisição…</string>
     <string name="progress_registering">Registrando usuário</string>
+    <string name="txt_my_profile">Complete seus dados, é importante para \nnós saber mais sobre você…</string>
 
 </resources>

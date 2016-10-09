@@ -8,6 +8,7 @@
     android:columnCount="1"
     android:rowCount="2"
     tools:context=".MainLogadoActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -19,16 +20,13 @@
         android:title="@string/app_name"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <TextView
-        android:id="@+id/txtUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <ListView
         android:id="@+id/lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="200dp"
+        android:divider="@color/black_overlay"
+        android:dividerHeight="@dimen/activity_vertical_margin"
         tools:listfooter="@layout/itemlist_blog_posts_footer"
         />
 
