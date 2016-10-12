@@ -19,6 +19,7 @@ public class SessionResources {
 
     private SessionResources() {
         token = "";
+        user=new UserDTO();
     }
 
     public static SessionResources getInstance() {
@@ -57,6 +58,8 @@ public class SessionResources {
         if (token.isEmpty())
             if (ctx != null)
                 loadToken(ctx);
+
+        Log.d("SessionResources", "Session Token: "+token + ". User: "+user);
         return token;
     }
 

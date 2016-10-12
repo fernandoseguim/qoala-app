@@ -10,22 +10,30 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import solutions.plural.qoala.adapters.CommentsAdapter;
+import solutions.plural.qoala.models.CommentsDTO;
 import solutions.plural.qoala.models.PostsDTO;
 import solutions.plural.qoala.utils.HttpMethod;
 import solutions.plural.qoala.utils.HttpStatusCode;
 import solutions.plural.qoala.utils.JsonTask;
+import solutions.plural.qoala.utils.SessionResources;
 
 public class PostDetailActivity extends AppCompatActivity {
 
     private AlertDialog commentsDialog;
     PostsDTO post;
+    CommentsAdapter commentsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +76,7 @@ public class PostDetailActivity extends AppCompatActivity {
         @Override
         protected void setConfig() {
             this.context = getContext();
-            action = "posts/"+getPostId();
+            action = "posts/" + getPostId();
             httpMethod = HttpMethod.GET;
         }
 
@@ -93,8 +101,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     //
                     ListView listView = new ListView(getContext());
 
-                    CommentsAdapter adapter = new CommentsAdapter(getContext(), post);
-                    listView.setAdapter(adapter);
+                    commentsAdapter = new CommentsAdapter(getContext(), post);
+                    listView.setAdapter(commentsAdapter);
+                    setFooterList(listView);
                     commentsDialog = new AlertDialog.Builder(getContext())
                             .setView(listView)
                             .setTitle(R.string.title_activity_comments)
@@ -124,6 +133,56 @@ public class PostDetailActivity extends AppCompatActivity {
                     )
                     .create().show();
 
+            return false;
+        }
+    }
+
+    private void setFooterList(final ListView lista) {
+        View footerView = getLayoutInflater().inflate(R.layout.itemlist_post_comments_footer, null, false);
+
+        lista.addFooterView(footerView);
+        final EditText edtComment=(EditText)footerView.findViewById(R.id.edtComment);
+
+        ImageButton btn_add = (ImageButton) footerView.findViewById(R.id.btn_comments_add);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("COMMENTS", "Adicionando comentário...");
+                JSONStringer comment = null;
+                try {
+                    comment = new JSONStringer()
+                            .object()
+                            .key("content").value(edtComment.getText().toString())
+                            .key("id_user").value(SessionResources.getInstance().getUser().id_user)
+                            .key("id_post").value(getPostId())
+                            .endObject();
+                    new AddCommentTask().execute(comment);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    public class AddCommentTask extends JsonTask {
+        @Override
+        protected void setConfig() {
+            this.context = getContext();
+            action = "posts/" + getPostId()+"/comments";
+            httpMethod = HttpMethod.POST;
+        }
+
+        @NonNull
+        @Override
+        protected boolean onPostExecuted(@HttpStatusCode int responseCode, String responseMessage, JSONObject jsonObject) {
+            switch (responseCode) {
+                case HttpStatusCode.Created:
+                    CommentsDTO comments = CommentsDTO.fromJson(jsonObject.toString());
+                    commentsAdapter.add(comments);
+                    return true;
+            }
             return false;
         }
     }
