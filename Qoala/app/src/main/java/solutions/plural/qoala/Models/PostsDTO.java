@@ -24,8 +24,9 @@ public class PostsDTO implements Serializable {
     public String getPublishedAt() {
         // 0123456789012345
         // YYYY-MM-DDTHH:MM
-        if (published_at.isEmpty())
+        if (published_at == null || published_at.isEmpty())
             return "-";
+
         return (published_at.substring(8, 10)
                 + "/" +
                 published_at.substring(5, 7)
@@ -33,10 +34,6 @@ public class PostsDTO implements Serializable {
                 published_at.substring(0, 4)
                 + " " +
                 published_at.substring(11, 16));
-    }
-
-    public CommentsListDTO getCommentsList() {
-        return (CommentsListDTO) comments;
     }
 
     public String toJson() {

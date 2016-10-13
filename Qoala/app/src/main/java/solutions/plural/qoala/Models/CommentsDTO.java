@@ -24,7 +24,8 @@ public class CommentsDTO {
         // 0123456789012345
         // YYYY-MM-DDTHH:MM
         if (created_at == null)
-            return "";
+            return "-";
+
         return (created_at.substring(8, 10)
                 + "/" +
                 created_at.substring(5, 7)
