@@ -16,20 +16,23 @@ public class CommentsDTO {
     public String created_at;
     //public String approved_at;
 
+    public static CommentsDTO fromJson(String json) {
+        return new Gson().fromJson(json, CommentsDTO.class);
+    }
+
     public String getCreatedAt() {
         // 0123456789012345
         // YYYY-MM-DDTHH:MM
-        return String.format(created_at.substring(8, 10)
+        if (created_at == null)
+            return "-";
+
+        return (created_at.substring(8, 10)
                 + "/" +
                 created_at.substring(5, 7)
                 + "/" +
                 created_at.substring(0, 4)
                 + " " +
                 created_at.substring(11, 16));
-    }
-
-    public static CommentsDTO fromJson(String json) {
-        return new Gson().fromJson(json, CommentsDTO.class);
     }
 
     public String toJson() {

@@ -24,9 +24,10 @@ public class PostsDTO implements Serializable {
     public String getPublishedAt() {
         // 0123456789012345
         // YYYY-MM-DDTHH:MM
-        if (published_at.isEmpty())
+        if (published_at == null || published_at.isEmpty())
             return "-";
-        return String.format(published_at.substring(8, 10)
+
+        return (published_at.substring(8, 10)
                 + "/" +
                 published_at.substring(5, 7)
                 + "/" +
