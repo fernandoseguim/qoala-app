@@ -9,11 +9,11 @@
 
     <EditText
         android:id="@+id/edtComment"
-        android:layout_gravity="center_vertical"
         android:layout_column="0"
-        android:layout_columnWeight="1"
+        android:layout_columnWeight="2"
+        android:layout_gravity="center_vertical"
         android:layout_row="0"
-        android:hint="aiushaiushaiu" />
+        android:hint="@string/txt_comment_here" />
 
     <ImageButton
         android:id="@+id/btn_comments_add"

@@ -109,6 +109,10 @@ public class SessionResources {
         editor.clear().apply();
     }
 
+    public int getUserID() {
+        return getUser().id_user;
+    }
+
     public UserDTO getUser() {
         Log.d("SessionResources", "User: " + user);
         return user;

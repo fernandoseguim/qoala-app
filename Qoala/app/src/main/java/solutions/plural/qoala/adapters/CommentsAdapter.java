@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import solutions.plural.qoala.R;
 import solutions.plural.qoala.models.CommentsDTO;
-import solutions.plural.qoala.models.PostsDTO;
+import solutions.plural.qoala.models.CommentsListDTO;
 
 /**
  * Created by gabri on 29/09/2016.
@@ -20,28 +20,28 @@ import solutions.plural.qoala.models.PostsDTO;
 public class CommentsAdapter extends ArrayAdapter<CommentsDTO> {
 
     private final Activity context;
-    private final PostsDTO post;
+    private final CommentsListDTO comments;
 
-    public CommentsAdapter(Activity context, PostsDTO post) {
-        super(context, R.layout.itemlist_post_comments, post.comments);
+    public CommentsAdapter(Activity context, CommentsListDTO comments) {
+        super(context, R.layout.itemlist_post_comments, comments);
         this.context = context;
-        this.post = post;
+        this.comments = comments;
     }
 
     @Override
     public int getCount() {
-        return post.comments.size();
+        return comments.size();
     }
 
     @Nullable
     @Override
     public CommentsDTO getItem(int position) {
-        return post.comments.get(position);
+        return comments.get(position);
     }
 
     @Override
     public int getPosition(CommentsDTO item) {
-        return post.comments.indexOf(item);
+        return comments.indexOf(item);
     }
 
     @NonNull

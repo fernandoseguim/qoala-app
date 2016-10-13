@@ -2,6 +2,7 @@ package solutions.plural.qoala.utils;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -23,7 +24,8 @@ public class JSONAPI {
     // Resposta de do WS
     public static final String json_message = "Message";
     public static final String json_token = "token";
-    public static final String json_user = "user";
+
+    public static final String json_array = "array";
 
     private static final String TAG = "JSONAPI";
     private static final String urlService = "http://ws.qoala.com.br/";
@@ -106,7 +108,7 @@ public class JSONAPI {
     public static JSONObject readInputStream(HttpURLConnection connection)
             throws JSONException, IOException {
 
-        String linha = "";
+        String linha;
         StringBuilder builder = new StringBuilder();
         BufferedReader stream;
         try {
@@ -126,11 +128,19 @@ public class JSONAPI {
         }
         if (builder.length() == 0)
             builder.append("{}");
-        JSONObject ret = new JSONObject(builder.toString());
+
+        JSONObject ret;
+        try {
+            ret = new JSONObject(builder.toString());
+        } catch (Exception ex) {
+            JSONArray retArray = new JSONArray(builder.toString());
+            ret = new JSONObject().accumulate(json_array, retArray);
+        }
         ret.accumulate(json_responseCode, connection.getResponseCode())
                 .accumulate(json_responseMessage, connection.getResponseMessage());
 
         return ret;
+
     }
 
     public static void writeInputStream(HttpURLConnection connection, JSONStringer jsonStringer)

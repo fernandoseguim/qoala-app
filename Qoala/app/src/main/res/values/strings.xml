@@ -5,7 +5,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_post">Newsletter</string>
-    <string name="title_activity_comments">Comments</string>
+    <string name="title_activity_post_comments">Comments</string>
     <string name="title_activity_myprofile">My Profile</string>
 
     <string name="prompt_email">Email</string>
@@ -30,7 +30,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="error_connection_failure">Register failure, check your internet connection and try again.</string>
+    <string name="error_connection_failure">Connection failure, check your internet connection and try again.</string>
     <string name="error_unauthorized">Unauthorized access try another time.</string>
 
     <string name="hint_name">User Name</string>
@@ -44,6 +44,7 @@
 
     <string name="txt_toregister">To register you just need to type\n your name, e-mail and password\n into the fields below and go Register</string>
     <string name="txt_my_profile">Complete your data, it is importante\n for us to know about you…</string>
+    <string name="txt_comment_here">Comment here…</string>
 
     <string name="progress_title">Processing…</string>
     <string name="progress_waiting">Working your request…</string>

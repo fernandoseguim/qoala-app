@@ -63,7 +63,7 @@ public class SplashActivity extends Activity {
         @Override
         protected JSONObject doInBackground(JSONStringer... params) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -79,7 +79,7 @@ public class SplashActivity extends Activity {
                     startLoginActivity();
                     return true;
                 case HttpStatusCode.OK:
-                    SessionResources sr = SessionResources.getInstance(true);
+                    SessionResources sr = SessionResources.getInstance();
                     sr.setUser(UserDTO.fromJson(jsonObject.toString()));
                     startDeviceListActivity();
                     return true;

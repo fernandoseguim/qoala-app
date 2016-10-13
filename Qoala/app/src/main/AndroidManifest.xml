@@ -13,7 +13,7 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,12 +46,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="solutions.plural.qoala.MainLogadoActivity" />
         </activity>
-        <activity android:name=".MyProfileActivity"
+        <activity
+            android:name=".MyProfileActivity"
             android:label="@string/title_activity_myprofile"
             android:parentActivityName=".MainLogadoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="solutions.plural.qoala.MainLogadoActivity" />
+        </activity>
+        <activity
+            android:name=".PostCommentsActivity"
+            android:label="@string/title_activity_post_comments">
         </activity>
     </application>
 

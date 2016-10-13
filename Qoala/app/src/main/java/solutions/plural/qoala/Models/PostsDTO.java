@@ -26,13 +26,17 @@ public class PostsDTO implements Serializable {
         // YYYY-MM-DDTHH:MM
         if (published_at.isEmpty())
             return "-";
-        return String.format(published_at.substring(8, 10)
+        return (published_at.substring(8, 10)
                 + "/" +
                 published_at.substring(5, 7)
                 + "/" +
                 published_at.substring(0, 4)
                 + " " +
                 published_at.substring(11, 16));
+    }
+
+    public CommentsListDTO getCommentsList() {
+        return (CommentsListDTO) comments;
     }
 
     public String toJson() {
